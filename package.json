@@ -41,5 +41,8 @@
     "singleQuote": true,
     "jsxSingleQuote": true,
     "semi": false
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
   }
 }
