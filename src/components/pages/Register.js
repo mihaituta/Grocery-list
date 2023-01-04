@@ -6,8 +6,8 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const { createUser } = UserAuth()
   const navigate = useNavigate()
+  const { createUser } = UserAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
