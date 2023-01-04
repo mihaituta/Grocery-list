@@ -1,43 +1,31 @@
-import { signOut } from 'firebase/auth'
-import { auth } from '../../firebase'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useContext, useEffect } from 'react'
-import { AuthContext } from '../Auth/Auth'
+import { UserAuth } from '../Auth/AuthContext'
 
-const Home = () => {
+const Account = () => {
+  const { user, logout } = UserAuth()
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        navigate('/login')
-        console.log('Signed out successfully')
-      })
-      .catch((error) => {
-        // An error happened.
-      })
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate('/login')
+      console.log('You are logged out')
+    } catch (e) {
+      console.log(e.message)
+    }
   }
 
-  const { currentUser } = useContext(AuthContext)
-
-  useEffect(() => {
-    if (!currentUser) {
-      return navigate('/login')
-    }
-  }, [currentUser, navigate])
-
   return (
-    <>
-      <nav>
-        <p>Welcome Home</p>
+    <div className='max-w-[600px] mx-auto my-16 p-4'>
+      <h1 className='text-2xl font-bold py-4'>Account</h1>
+      <p>User Email: {user && user.email}</p>
 
-        <div>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      </nav>
-    </>
+      <button onClick={handleLogout} className='border px-6 py-2 my-4'>
+        Logout
+      </button>
+    </div>
   )
 }
 
-export default Home
+export default Account

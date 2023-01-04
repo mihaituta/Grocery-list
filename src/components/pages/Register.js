@@ -1,76 +1,59 @@
 import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../firebase'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserAuth } from '../Auth/AuthContext'
 
 const Register = () => {
-  const navigate = useNavigate()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const { createUser } = UserAuth()
+  const navigate = useNavigate()
 
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user
-        console.log(user)
-        navigate('/login')
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(errorCode, errorMessage)
-        // ..
-      })
+    setError('')
+    try {
+      await createUser(email, password)
+      navigate('/')
+    } catch (e) {
+      setError(e.message)
+      console.log(e.message)
+    }
   }
 
   return (
-    <main>
-      <section>
-        <div>
-          <div>
-            <h1> Grocery List </h1>
-            <form>
-              <div>
-                <label htmlFor='email-address'>Email address</label>
-                <input
-                  type='email'
-                  label='Email address'
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  placeholder='Email address'
-                />
-              </div>
-
-              <div>
-                <label htmlFor='password'>Password</label>
-                <input
-                  type='password'
-                  label='Create password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  placeholder='Password'
-                />
-              </div>
-
-              <button type='submit' onClick={onSubmit}>
-                Register
-              </button>
-            </form>
-
-            <p>
-              Already have an account? <NavLink to='/login'>Login</NavLink>
-            </p>
-          </div>
+    <div className='max-w-[700px] mx-auto my-16 p-4'>
+      <div>
+        <h1 className='text-2xl font-bold py-2'>Register</h1>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div className='flex flex-col py-2'>
+          <label className='py-2 font-medium'>Email Address</label>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            className='border p-3'
+            type='email'
+          />
         </div>
-      </section>
-    </main>
+        <div className='flex flex-col py-2'>
+          <label className='py-2 font-medium'>Password</label>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            className='border p-3'
+            type='password'
+          />
+        </div>
+        <p className='py-2'>
+          Already have an account?{' '}
+          <Link to='/login' className='underline'>
+            Login.
+          </Link>
+        </p>
+        <button className='border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white'>
+          Register
+        </button>
+      </form>
+    </div>
   )
 }
 

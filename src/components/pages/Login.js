@@ -1,81 +1,59 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../firebase'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { AuthContext } from '../Auth/Auth'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserAuth } from '../Auth/AuthContext'
 
 const Login = () => {
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+  const { login } = UserAuth()
 
-  const onLogin = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user
-        navigate('/')
-        console.log(user)
-      })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(errorCode, errorMessage)
-      })
+    setError('')
+    try {
+      await login(email, password)
+      navigate('/')
+    } catch (e) {
+      setError(e.message)
+      console.log(e.message)
+    }
   }
 
-  const { currentUser } = useContext(AuthContext)
-
-  useEffect(() => {
-    if (currentUser) {
-      return navigate('/')
-    }
-  }, [currentUser, navigate])
-
   return (
-    <>
-      <main>
-        <section>
-          <div>
-            <h1> Grocery List </h1>
-            <form>
-              <div>
-                <label htmlFor='email-address'>Email address</label>
-                <input
-                  id='email-address'
-                  name='email'
-                  type='email'
-                  required
-                  placeholder='Email address'
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label htmlFor='password'>Password</label>
-                <input
-                  id='password'
-                  name='password'
-                  type='password'
-                  required
-                  placeholder='Password'
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <button onClick={onLogin}>Login</button>
-              </div>
-            </form>
-
-            <p className='text-sm text-white text-center'>
-              No account yet? <NavLink to='/register'>Register</NavLink>
-            </p>
-          </div>
-        </section>
-      </main>
-    </>
+    <div className='max-w-[700px] mx-auto my-16 p-4'>
+      <div>
+        <h1 className='text-2xl font-bold py-2'>Login</h1>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div className='flex flex-col py-2'>
+          <label className='py-2 font-medium'>Email Address</label>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            className='border p-3'
+            type='email'
+          />
+        </div>
+        <div className='flex flex-col py-2'>
+          <label className='py-2 font-medium'>Password</label>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            className='border p-3'
+            type='password'
+          />
+        </div>
+        <p className='py-2'>
+          Don't have an account yet?{' '}
+          <Link to='/register' className='underline'>
+            Register
+          </Link>
+        </p>
+        <button className='border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white'>
+          Login
+        </button>
+      </form>
+    </div>
   )
 }
 
