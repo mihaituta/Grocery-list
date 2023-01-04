@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../Auth/AuthContext'
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('demo@gmail.com')
+  const [password, setPassword] = useState('123123')
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const { login } = UserAuth()
@@ -31,6 +31,7 @@ const Login = () => {
         <div className='flex flex-col py-2'>
           <label className='py-2 font-medium'>Email Address</label>
           <input
+            value={'demo@gmail.com'}
             onChange={(e) => setEmail(e.target.value)}
             className='border p-3'
             type='email'
@@ -39,6 +40,7 @@ const Login = () => {
         <div className='flex flex-col py-2'>
           <label className='py-2 font-medium'>Password</label>
           <input
+            value={'123123'}
             onChange={(e) => setPassword(e.target.value)}
             className='border p-3'
             type='password'
