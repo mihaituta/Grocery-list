@@ -5,7 +5,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth'
-import { auth } from '../firebase'
+import { fbAuth, fbDB, setDoc, doc } from '../../store/firebase'
 
 const UserContext = createContext()
 
@@ -13,20 +13,36 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({})
 
   const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password)
+    return createUserWithEmailAndPassword(fbAuth, email, password)
+      .then((res) => {
+        if (res) {
+          const userId = fbAuth.currentUser.uid
+          try {
+            setDoc(doc(fbDB, 'users', userId), {
+              email: email,
+            })
+          } catch (err) {
+            console.error('Error creating account: ', err)
+          }
+        }
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('Email already in use')
+        }
+      })
   }
 
   const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password)
+    return signInWithEmailAndPassword(fbAuth, email, password)
   }
 
   const logout = () => {
-    return signOut(auth)
+    return signOut(fbAuth)
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser)
+    const unsubscribe = onAuthStateChanged(fbAuth, (currentUser) => {
       setUser(currentUser)
     })
     return () => {
