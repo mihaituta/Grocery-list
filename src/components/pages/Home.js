@@ -1,9 +1,17 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../auth/AuthContext'
-import ListsContext from '../../store/ListsContext'
+import ListsContext from '../../store/ListsContextProvider'
 
-const items = ['Cola', 'Potato Chips', 'Pudding', 'Chocolate']
+const items = [
+  'Cola',
+  'Potato Chips',
+  'Pudding',
+  'Chocolate',
+  'Potato Chips',
+  'Pudding',
+  'Chocolate',
+]
 
 const Home = () => {
   const { user, logout } = UserAuth()
@@ -20,7 +28,9 @@ const Home = () => {
   }
 
   const createList = () => {
-    listsCtx.addList()
+    // listsCtx.addList()
+    listsCtx.getLists()
+    console.log(listsCtx.lists)
   }
 
   /*  const foodItems = (
@@ -48,8 +58,10 @@ const Home = () => {
 
   const lists = (
     <div className='grid grid-cols-2 gap-4 bg-zinc-900 m-4'>
-      {items.map((item, index) => (
-        <li className='h-28	bg-yellow-500 rounded list-none' key={index}></li>
+      {listsCtx.lists.map((item, index) => (
+        <li className='h-28	bg-yellow-500 rounded list-none' key={index}>
+          {item.urlId}
+        </li>
       ))}
     </div>
   )

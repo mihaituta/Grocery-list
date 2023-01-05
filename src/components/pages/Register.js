@@ -23,7 +23,7 @@ const Register = () => {
   }
 
   return (
-    <div className='max-w-[700px] mx-auto my-16 p-4'>
+    <div className='max-w-[700px] min-h-screen bg-zinc-800 mx-auto py-16 p-4'>
       <div>
         <h1 className='text-2xl dark:text-white font-bold py-2'>Register</h1>
       </div>

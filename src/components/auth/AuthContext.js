@@ -6,11 +6,13 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth'
 import { fbAuth, fbDB, setDoc, doc } from '../../store/firebase'
+import ListsContext from '../../store/ListsContextProvider'
 
 const UserContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({})
+  const listsCtx = useContext(ListsContext)
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(fbAuth, email, password)
@@ -44,6 +46,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(fbAuth, (currentUser) => {
       setUser(currentUser)
+      listsCtx.getLists()
     })
     return () => {
       unsubscribe()

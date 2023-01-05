@@ -5,12 +5,12 @@ import { Routes, Route } from 'react-router-dom'
 import { AuthContextProvider } from './components/auth/AuthContext'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import NotFound404 from './components/pages/NotFound404'
-import ListsProvider from './store/ListsProvider'
+import { ListsContextProvider } from './store/ListsContextProvider'
 
 function App() {
   return (
-    <AuthContextProvider>
-      <ListsProvider>
+    <ListsContextProvider>
+      <AuthContextProvider>
         <Routes>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
@@ -24,8 +24,8 @@ function App() {
           />
           <Route path='*' element={<NotFound404 />} />
         </Routes>
-      </ListsProvider>
-    </AuthContextProvider>
+      </AuthContextProvider>
+    </ListsContextProvider>
   )
 }
 

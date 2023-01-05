@@ -7,6 +7,7 @@ import {
   addDoc,
   doc,
   collection,
+  getDocs,
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -31,4 +32,4 @@ const fbApp = initializeApp(firebaseConfig)
 const fbAuth = getAuth(fbApp)
 const fbDB = getFirestore(fbApp)
 
-export { fbApp, fbAuth, fbDB, doc, setDoc, addDoc, collection }
+export { fbApp, fbAuth, fbDB, doc, setDoc, addDoc, collection, getDocs }
