@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState } from 'react'
+import React, { useState } from 'react'
 import { nanoid } from 'nanoid'
 import { fbAuth, fbDB, collection, addDoc, getDocs } from './firebase'
 
@@ -14,8 +14,8 @@ const ListsContext = React.createContext({
 // }
 
 const listsReducer = async (state, action) => {
-  if (action.type === 'GET_LISTS') {
-    /*const userId = fbAuth.currentUser.uid
+  /*if (action.type === 'GET_LISTS') {
+    const userId = fbAuth.currentUser.uid
     const listsQuery = collection(fbDB, `users/${userId}/lists`)
 
     const updatedLists = []
@@ -41,8 +41,8 @@ const listsReducer = async (state, action) => {
     console.log(updatedLists)
     return {
       lists: updatedLists,
-    }*/
-  }
+    }
+  }*/
 
   if (action.type === 'ADD') {
     console.log(nanoid(10))
@@ -72,6 +72,7 @@ export const ListsContextProvider = ({ children }) => {
   /*  const [listsState, dispatchListsAction] = useReducer(listsReducer, {
     list: [],
   })*/
+  console.log(listsReducer)
 
   const getListsHandler = async () => {
     // dispatchListsAction({ type: 'GET_LISTS' })

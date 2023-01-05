@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../auth/AuthContext'
 import ListsContext from '../../store/ListsContextProvider'
 
-const items = [
+/*const items = [
   'Cola',
   'Potato Chips',
   'Pudding',
@@ -11,7 +11,7 @@ const items = [
   'Potato Chips',
   'Pudding',
   'Chocolate',
-]
+]*/
 
 const Home = () => {
   const { user, logout } = UserAuth()

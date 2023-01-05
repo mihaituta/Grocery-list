@@ -46,7 +46,9 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(fbAuth, (currentUser) => {
       setUser(currentUser)
-      listsCtx.getLists()
+      if (currentUser) {
+        listsCtx.getLists()
+      }
     })
     return () => {
       unsubscribe()

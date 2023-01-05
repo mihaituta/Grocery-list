@@ -23,13 +23,15 @@ const Login = () => {
   }
 
   return (
-    <div className='max-w-[700px] min-h-screen bg-zinc-800 mx-auto py-16 p-4'>
+    <div className='max-w-[700px] min-h-screen bg-zinc-800 mx-auto py-32 p-4'>
       <div>
         <h1 className='text-2xl dark:text-white font-bold py-2'>Login</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col py-2'>
-          <label className=' dark:text-white font-medium'>Email Address</label>
+          <label className='py-2 dark:text-white font-medium'>
+            Email Address
+          </label>
           <input
             value={'demo@gmail.com'}
             onChange={(e) => setEmail(e.target.value)}
