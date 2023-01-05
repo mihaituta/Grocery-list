@@ -23,7 +23,7 @@ const Home = () => {
     listsCtx.addList()
   }
 
-  const foodItems = (
+  /*  const foodItems = (
     <ul className='mt-2'>
       {items.map((item, index) => (
         <li key={index}>
@@ -44,7 +44,7 @@ const Home = () => {
         </li>
       ))}
     </ul>
-  )
+  )*/
 
   const lists = (
     <div className='grid grid-cols-2 gap-4 bg-zinc-900 m-4'>
