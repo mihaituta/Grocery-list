@@ -1,27 +1,50 @@
-import React, { useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
 import { nanoid } from 'nanoid'
-import { fbAuth, fbDB, collection, addDoc, getDocs } from './firebase'
+import {
+  fbAuth,
+  fbDB,
+  collection,
+  addDoc,
+  getDocs,
+  onSnapshot,
+  query,
+  deleteDoc,
+  orderBy,
+  doc,
+} from './firebase'
+import appReducer from './AppReducer'
 
-const ListsContext = React.createContext({
+const initState = {
   lists: [],
-  getLists: (lists) => {},
   addList: (list) => {},
+  getLists: () => {},
   deleteList: (id) => {},
-})
+  setListsListener: null,
+  unsubscribeListsListener: () => {},
+}
 
-// const defaultListsState = {
-//   lists: ['sms'],
-// }
+export const ListsContext = createContext(initState)
 
-const listsReducer = async (state, action) => {
-  /*if (action.type === 'GET_LISTS') {
+export const ListsContextProvider = ({ children }) => {
+  const [state, dispatchListsAction] = useReducer(appReducer, initState)
+
+  const getListsHandler = async () => {
     const userId = fbAuth.currentUser.uid
-    const listsQuery = collection(fbDB, `users/${userId}/lists`)
+
+    const listsQueryOrdered = query(
+      collection(fbDB, `users/${userId}/lists`),
+      orderBy('date', 'desc')
+    )
 
     const updatedLists = []
-
     try {
-      const snapshot = await getDocs(listsQuery)
+      const snapshot = await getDocs(listsQueryOrdered)
 
       snapshot.forEach((doc) => {
         let list = doc.data()
@@ -38,14 +61,154 @@ const listsReducer = async (state, action) => {
       console.log(e.message)
     }
 
-    console.log(updatedLists)
-    return {
-      lists: updatedLists,
-    }
-  }*/
+    dispatchListsAction({ type: 'GET_LISTS', payload: updatedLists })
+  }
 
-  if (action.type === 'ADD') {
-    console.log(nanoid(10))
+  const addListHandler = async () => {
+    const userId = fbAuth.currentUser.uid
+
+    const listsQuery = collection(fbDB, `users/${userId}/lists`)
+
+    try {
+      await addDoc(listsQuery, {
+        date: new Date().toISOString(),
+        items: [],
+        urlId: nanoid(10),
+      })
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
+
+  const deleteListHandler = async (id) => {
+    const userId = fbAuth.currentUser.uid
+    const listsQuery = doc(fbDB, `users/${userId}/lists`, id)
+
+    try {
+      await deleteDoc(listsQuery)
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
+
+  const setListsListenerHandler = () => {
+    const userId = fbAuth.currentUser.uid
+    const listsQuery = query(
+      collection(fbDB, `users/${userId}/lists`),
+      orderBy('date', 'desc')
+    )
+    let initState = true
+    const unsubscribeListener = onSnapshot(listsQuery, (snapshot) => {
+      if (initState) {
+        initState = false
+      } else {
+        if (!snapshot.docChanges().empty) {
+          snapshot.docChanges().forEach((change) => {
+            let list = change.doc.data()
+            const id = change.doc.id
+            const listData = {
+              id,
+              date: new Date(list.date),
+              urlId: list.urlId,
+              items: list.items,
+            }
+            if (change.type === 'added') {
+              console.log('added')
+              dispatchListsAction({ type: 'ADD_LIST', payload: listData })
+            } else if (change.type === 'modified') {
+              console.log('modified')
+            } else if (change.type === 'removed') {
+              dispatchListsAction({ type: 'DELETE_LIST', payload: id })
+              console.log('removed')
+            }
+          })
+        }
+      }
+    })
+    dispatchListsAction({
+      type: 'UNSUBSCRIBE_LISTENER',
+      payload: unsubscribeListener,
+    })
+  }
+
+  const clearDataHandler = () => {
+    dispatchListsAction({ type: 'CLEAR_DATA' })
+  }
+
+  /*  const [lists, setLists] = useState([])
+  const [listsListener, setListsListener] = useState(null)
+  let listsTemp = []
+
+  const getListsHandler = async () => {
+    const userId = fbAuth.currentUser.uid
+    const listsQuery = query(
+      collection(fbDB, `users/${userId}/lists`),
+      orderBy('date', 'desc')
+    )
+
+    const updatedLists = []
+    try {
+      const snapshot = await getDocs(listsQuery)
+
+      snapshot.forEach((doc) => {
+        let list = doc.data()
+        const id = doc.id
+        const temp = {
+          id,
+          date: list.date,
+          urlId: list.urlId,
+          items: list.items,
+        }
+        updatedLists.push(temp)
+      })
+
+      listsTemp = updatedLists
+      setLists(updatedLists)
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
+  const setListsListenerHandler = () => {
+    const userId = fbAuth.currentUser.uid
+    const listsQuery = query(
+      collection(fbDB, `users/${userId}/lists`),
+      orderBy('date', 'desc')
+    )
+    let initState = true
+    const unsubscribe = onSnapshot(listsQuery, (snapshot) => {
+      if (initState) {
+        initState = false
+      } else {
+        if (!snapshot.docChanges().empty) {
+          snapshot.docChanges().forEach((change) => {
+            let list = change.doc.data()
+            const id = change.doc.id
+            const listData = {
+              id,
+              date: new Date(list.date),
+              urlId: list.urlId,
+              items: list.items,
+            }
+            if (change.type === 'added') {
+              console.log('added')
+              setLists([listData, ...listsTemp])
+              listsTemp = [listData, ...listsTemp]
+            } else if (change.type === 'modified') {
+              console.log('modified')
+            } else if (change.type === 'removed') {
+              console.log('removed')
+            }
+          })
+        }
+      }
+    })
+    // setListsListener(unsubscribe)
+  }
+
+  const addListHandler = async () => {
     const userId = fbAuth.currentUser.uid
     const listsQuery = collection(fbDB, `users/${userId}/lists`)
 
@@ -61,61 +224,27 @@ const listsReducer = async (state, action) => {
     }
   }
 
-  if (action.type === 'DELETE') {
-  }
-
-  // return defaultListsState
-}
-
-export const ListsContextProvider = ({ children }) => {
-  const [lists, setLists] = useState([])
-  /*  const [listsState, dispatchListsAction] = useReducer(listsReducer, {
-    list: [],
-  })*/
-  console.log(listsReducer)
-
-  const getListsHandler = async () => {
-    // dispatchListsAction({ type: 'GET_LISTS' })
+  const deleteListHandler = async (payload) => {
     const userId = fbAuth.currentUser.uid
-    const listsQuery = collection(fbDB, `users/${userId}/lists`)
-
-    const updatedLists = []
+    const listsQuery = collection(fbDB, `users/${userId}/lists`, payload)
 
     try {
-      const snapshot = await getDocs(listsQuery)
-
-      snapshot.forEach((doc) => {
-        let list = doc.data()
-        const id = doc.id
-        const temp = {
-          id,
-          date: list.date,
-          urlId: list.urlId,
-          items: list.items,
-        }
-        updatedLists.push(temp)
-      })
-    } catch (e) {
-      console.log(e.message)
+      await deleteDoc(listsQuery)
+    } catch (error) {
+      console.log(error)
     }
-
-    // console.log(updatedLists)
-    setLists(updatedLists)
-  }
-
-  /*  const addListHandler = (list) => {
-    dispatchListsAction({ type: 'ADD', list: list })
-  }
-
-  const deleteListHandler = (id) => {
-    dispatchListsAction({ type: 'DELETE', id: id })
   }*/
 
   const listsContext = {
-    lists,
+    lists: state.lists,
     getLists: getListsHandler,
-    /*addList: addListHandler,
-    deleteList: deleteListHandler,*/
+    addList: addListHandler,
+    deleteList: deleteListHandler,
+    setListsListener: setListsListenerHandler,
+    unsubscribeListsListener: state.unsubscribeListsListener,
+
+    clearData: clearDataHandler,
+    // deleteList: deleteListHandler,
   }
 
   return (
@@ -124,5 +253,3 @@ export const ListsContextProvider = ({ children }) => {
     </ListsContext.Provider>
   )
 }
-
-export default ListsContext

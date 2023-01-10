@@ -6,6 +6,7 @@ import { AuthContextProvider } from './components/auth/AuthContext'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import NotFound404 from './components/pages/NotFound404'
 import { ListsContextProvider } from './store/ListsContextProvider'
+import List from './components/pages/List'
 
 function App() {
   return (
@@ -19,6 +20,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/:urlId'
+            element={
+              <ProtectedRoute>
+                <List />
               </ProtectedRoute>
             }
           />

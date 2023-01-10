@@ -1,17 +1,7 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../auth/AuthContext'
-import ListsContext from '../../store/ListsContextProvider'
-
-/*const items = [
-  'Cola',
-  'Potato Chips',
-  'Pudding',
-  'Chocolate',
-  'Potato Chips',
-  'Pudding',
-  'Chocolate',
-]*/
+import { ListsContext } from '../../store/ListsContextProvider'
 
 const Home = () => {
   const { user, logout } = UserAuth()
@@ -27,9 +17,7 @@ const Home = () => {
     }
   }
 
-  const createList = () => {
-    // listsCtx.addList()
-    listsCtx.getLists()
+  const sms = () => {
     console.log(listsCtx.lists)
   }
 
@@ -58,11 +46,17 @@ const Home = () => {
 
   const lists = (
     <div className='grid grid-cols-2 gap-4 bg-zinc-900 m-4'>
-      {listsCtx.lists.map((item, index) => (
-        <li className='h-28	bg-yellow-500 rounded list-none' key={index}>
-          {item.urlId}
-        </li>
-      ))}
+      {listsCtx.lists &&
+        listsCtx.lists.map((list) => (
+          <div
+            className='h-28	bg-yellow-500 rounded list-none'
+            key={list.urlId}
+            onClick={() => navigate('/' + list.urlId)}
+          >
+            {list.urlId}
+            <button onClick={() => listsCtx.deleteList(list.id)}>Delete</button>
+          </div>
+        ))}
     </div>
   )
 
@@ -83,9 +77,13 @@ const Home = () => {
         <p className='dark:text-white font-medium p-4'>{user && user.email}</p>
         <button
           className='dark:text-white border px-6 py-2  m-4'
-          onClick={createList}
+          onClick={listsCtx.addList}
         >
           Add list
+        </button>
+
+        <button className='dark:text-white border px-6 py-2  m-4' onClick={sms}>
+          Show lists
         </button>
       </div>
 

@@ -1,0 +1,36 @@
+export default function AppReducer(state, action) {
+  switch (action.type) {
+    case 'GET_LISTS':
+      return {
+        ...state,
+        lists: [...state.lists, ...action.payload],
+      }
+
+    case 'ADD_LIST':
+      return {
+        ...state,
+        lists: [action.payload, ...state.lists],
+      }
+
+    case 'DELETE_LIST':
+      return {
+        ...state,
+        lists: state.lists.filter((list) => list.id !== action.payload),
+      }
+
+    case 'UNSUBSCRIBE_LISTENER':
+      return {
+        ...state,
+        unsubscribeListsListener: action.payload,
+      }
+
+    case 'CLEAR_DATA':
+      return {
+        ...state,
+        lists: [],
+      }
+
+    default:
+      return state
+  }
+}
