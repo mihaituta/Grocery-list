@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../auth/AuthContext'
 import { ListsContext } from '../../store/ListsContextProvider'
@@ -17,32 +17,15 @@ const Home = () => {
     }
   }
 
-  const sms = () => {
-    console.log(listsCtx.lists)
+  const listRedirect = (list) => {
+    listsCtx.setCurrentList(list)
+    navigate('/' + list.urlId)
   }
 
-  /*  const foodItems = (
-    <ul className='mt-2'>
-      {items.map((item, index) => (
-        <li key={index}>
-          <label className='inline-flex items-center bg-zinc-500 mt-2 p-2 w-full'>
-            <input
-              className='w-8 h-8 text-green-600 focus:border-none border-none focus:ring-0 ring-0 rounded-full'
-              type='checkbox'
-              id={`checkbox-${index}`}
-              name={item}
-            />
-            <label
-              className='ml-3 text-2xl font-semibold text-white'
-              htmlFor={`checkbox-${index}`}
-            >
-              {item}
-            </label>
-          </label>
-        </li>
-      ))}
-    </ul>
-  )*/
+  const show = () => {
+    console.log(listsCtx.lists)
+    console.log(listsCtx.currentList)
+  }
 
   const lists = (
     <div className='grid grid-cols-2 gap-4 bg-zinc-900 m-4'>
@@ -51,10 +34,10 @@ const Home = () => {
           <div
             className='h-28	bg-yellow-500 rounded list-none'
             key={list.urlId}
-            onClick={() => navigate('/' + list.urlId)}
+            onClick={() => listRedirect(list)}
           >
             {list.urlId}
-            <button onClick={() => listsCtx.deleteList(list.id)}>Delete</button>
+            {/*<button onClick={() => listsCtx.deleteList(list.id)}>Delete</button>*/}
           </div>
         ))}
     </div>
@@ -81,9 +64,11 @@ const Home = () => {
         >
           Add list
         </button>
-
-        <button className='dark:text-white border px-6 py-2  m-4' onClick={sms}>
-          Show lists
+        <button
+          className='dark:text-white border px-6 py-2  m-4'
+          onClick={show}
+        >
+          Add list
         </button>
       </div>
 

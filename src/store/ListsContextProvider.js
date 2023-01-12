@@ -22,6 +22,8 @@ import appReducer from './AppReducer'
 
 const initState = {
   lists: [],
+  currentList: {},
+  setCurrentList: (payload) => {},
   addList: (list) => {},
   getLists: () => {},
   deleteList: (id) => {},
@@ -91,6 +93,10 @@ export const ListsContextProvider = ({ children }) => {
       console.log(error)
       return error
     }
+  }
+
+  const setCurrentListHandler = (payload) => {
+    dispatchListsAction({ type: 'SET_CURRENT_LIST', payload })
   }
 
   const setListsListenerHandler = () => {
@@ -237,12 +243,13 @@ export const ListsContextProvider = ({ children }) => {
 
   const listsContext = {
     lists: state.lists,
+    currentList: state.currentList,
+    setCurrentList: setCurrentListHandler,
     getLists: getListsHandler,
     addList: addListHandler,
     deleteList: deleteListHandler,
     setListsListener: setListsListenerHandler,
     unsubscribeListsListener: state.unsubscribeListsListener,
-
     clearData: clearDataHandler,
     // deleteList: deleteListHandler,
   }

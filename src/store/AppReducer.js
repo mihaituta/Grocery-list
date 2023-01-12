@@ -6,6 +6,21 @@ export default function AppReducer(state, action) {
         lists: [...state.lists, ...action.payload],
       }
 
+    case 'SET_CURRENT_LIST':
+      if (action.payload.list) {
+        return {
+          ...state,
+          currentList: action.payload.list,
+        }
+      } else if (action.payload.urlId) {
+        return {
+          ...state,
+          currentList: state.lists.find(
+            (list) => list.urlId === action.payload.urlId
+          ),
+        }
+      }
+
     case 'ADD_LIST':
       return {
         ...state,
