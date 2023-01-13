@@ -10,6 +10,7 @@ const List = () => {
   const navigate = useNavigate()
   const listsCtx = useContext(ListsContext)
   const [itemName, setItemName] = useState('')
+  const [itemChecked, setItemChecked] = useState(false)
   const itemNameRef = useRef('')
 
   const deleteList = () => {
@@ -30,6 +31,20 @@ const List = () => {
 
   const itemNameChangeHandler = (event) => {
     setItemName(event.target.value)
+  }
+
+  const foodItemCheckHandler = (index) => {
+    let foodItemsCheckedStatus = listsCtx.currentList.foodItems
+    let checkbox = foodItemsCheckedStatus[index]
+
+    checkbox.checked = !checkbox.checked
+
+    listsCtx.toggleFoodItemCheckbox({
+      list: foodItemsCheckedStatus,
+      listId: listsCtx.currentList.id,
+    })
+
+    listsCtx.updateList(listsCtx.currentList)
   }
 
   const show = () => {
@@ -61,6 +76,8 @@ const List = () => {
             <label className='flex items-center bg-zinc-800 mt-2 px-4 py-3 mx-2 rounded'>
               <input
                 type='checkbox'
+                checked={foodItem.checked}
+                onChange={() => foodItemCheckHandler(index)}
                 id={`checkbox-${index}`}
                 name={foodItem.name}
                 className='w-7 h-7 text-yellow-500 bg-zinc-800
@@ -68,7 +85,7 @@ const List = () => {
               />
 
               <label
-                className='ml-3 text-xl text-white flex items-center content-center place-items-center'
+                className='ml-3 text-xl text-white flex items-center content-center place-items-center break-all'
                 htmlFor={`checkbox-${index}`}
               >
                 {foodItem.name}

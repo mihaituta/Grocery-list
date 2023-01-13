@@ -21,7 +21,7 @@ import {
   arrayUnion,
 } from './firebase'
 import appReducer from './AppReducer'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const initState = {
   lists: [],
@@ -33,7 +33,7 @@ const initState = {
   addFoodItem: (item) => {},
   // ? editFoodItem: (item) => {},
   deleteFoodItem: (id) => {},
-  toggleFoodItemCheckbox: (toggle) => {},
+  toggleFoodItemCheckbox: (payload) => {},
   setListsListener: null,
   unsubscribeListsListener: () => {},
 }
@@ -43,6 +43,7 @@ export const ListsContext = createContext(initState)
 export const ListsContextProvider = ({ children }) => {
   const [state, dispatchListsAction] = useReducer(appReducer, initState)
   const currentUrl = useLocation()
+  const navigate = useNavigate()
 
   // GET LISTS
   const getListsHandler = async () => {
@@ -101,6 +102,23 @@ export const ListsContextProvider = ({ children }) => {
     }
   }
 
+  // UPDATE LIST
+  const updateListHandler = async (list) => {
+    const userId = fbAuth.currentUser.uid
+    const listsQuery = doc(fbDB, `users/${userId}/lists`, list.id)
+
+    const listData = {
+      foodItems: list.foodItems,
+    }
+
+    try {
+      await updateDoc(listsQuery, listData)
+    } catch (e) {
+      console.log(e)
+      return e
+    }
+  }
+
   // DELETE LIST
   const deleteListHandler = async (id) => {
     const userId = fbAuth.currentUser.uid
@@ -140,7 +158,9 @@ export const ListsContextProvider = ({ children }) => {
   const deleteFoodItemHandler = async (item) => {}
 
   // TOGGLE FOOD ITEM CHECKBOX
-  const toggleFoodItemCheckboxHandler = async (item) => {}
+  const toggleFoodItemCheckboxHandler = async (payload) => {
+    dispatchListsAction({ type: 'TOGGLE_FOODITEM_CHECKBOX', payload: payload })
+  }
 
   // SET CURRENT LIST
   const setCurrentListHandler = (payload) => {
@@ -180,6 +200,8 @@ export const ListsContextProvider = ({ children }) => {
               })
               dispatchListsAction({ type: 'UPDATE_LIST', payload: listData })
             } else if (change.type === 'removed') {
+              // can't go back on the page after it has been deleted and redirected to home
+              navigate('/', { replace: true })
               dispatchListsAction({ type: 'DELETE_LIST', payload: id })
             }
           })
@@ -203,6 +225,7 @@ export const ListsContextProvider = ({ children }) => {
     setCurrentList: setCurrentListHandler,
     getLists: getListsHandler,
     addList: addListHandler,
+    updateList: updateListHandler,
     deleteList: deleteListHandler,
     addFoodItem: addFoodItemHandler,
     deleteFoodItem: deleteFoodItemHandler,

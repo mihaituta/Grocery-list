@@ -49,6 +49,19 @@ export default function AppReducer(state, action) {
         lists: state.lists.filter((list) => list.id !== action.payload),
       }
 
+    case 'TOGGLE_FOODITEM_CHECKBOX': {
+      const list = state.lists.find((list) => list.id === action.payload.listId)
+
+      // updating the list's food items with the updated checked items
+      list.foodItems = action.payload.list
+
+      console.log(list)
+      console.log('state lists', state.lists)
+      return {
+        ...state,
+      }
+    }
+
     case 'UNSUBSCRIBE_LISTENER':
       return {
         ...state,
