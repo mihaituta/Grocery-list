@@ -45,31 +45,33 @@ const Home = () => {
 
   return (
     <div className='bg-neutral-900 min-h-screen min-h-full'>
-      <div className='bg-zinc-800'>
-        <div className='flex flex-row justify-between p-4'>
-          <h1 className='dark:text-white text-2xl font-bold py-4'>
+      <div className='bg-zinc-800 p-4'>
+        <div className='flex flex-row items-center justify-between '>
+          <h1 className='dark:text-white text-4xl font-semibold py-4'>
             Grocery list
           </h1>
           <button
             onClick={handleLogout}
-            className='border px-6 py-2 my-4 dark:text-white'
+            className='border px-6 h-12 text-lg dark:text-white'
           >
             Logout
           </button>
         </div>
-        <p className='dark:text-white font-medium p-4'>{user && user.email}</p>
+        <p className='dark:text-white text-xl mt-4 mb-6'>
+          {user && user.email}
+        </p>
         <button
-          className='dark:text-white border px-6 py-2  m-4'
+          className='border px-6 h-12 text-xl dark:text-white'
           onClick={listsCtx.addList}
         >
           Add list
         </button>
-        <button
+        {/*<button
           className='dark:text-white border px-6 py-2  m-4'
           onClick={show}
         >
           Show Current List
-        </button>
+        </button>*/}
       </div>
 
       {lists}
