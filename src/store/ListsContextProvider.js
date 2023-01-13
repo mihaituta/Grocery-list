@@ -19,6 +19,7 @@ import {
   doc,
   updateDoc,
   arrayUnion,
+  arrayRemove,
 } from './firebase'
 import appReducer from './AppReducer'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -30,9 +31,9 @@ const initState = {
   addList: (list) => {},
   getLists: () => {},
   deleteList: (id) => {},
-  addFoodItem: (item) => {},
+  addFoodItem: (foodItem) => {},
   // ? editFoodItem: (item) => {},
-  deleteFoodItem: (id) => {},
+  deleteFoodItem: (foodItem) => {},
   toggleFoodItemCheckbox: (payload) => {},
   setListsListener: null,
   unsubscribeListsListener: () => {},
@@ -155,7 +156,22 @@ export const ListsContextProvider = ({ children }) => {
   }
 
   // DELETE FOOD ITEM
-  const deleteFoodItemHandler = async (item) => {}
+  const deleteFoodItemHandler = async (foodItem) => {
+    const userId = fbAuth.currentUser.uid
+
+    const listsQuery = doc(fbDB, `users/${userId}/lists`, state.currentList.id)
+    try {
+      await updateDoc(
+        listsQuery,
+        {
+          foodItems: arrayRemove(foodItem),
+        },
+        { merge: true }
+      )
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   // TOGGLE FOOD ITEM CHECKBOX
   const toggleFoodItemCheckboxHandler = async (payload) => {

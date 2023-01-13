@@ -2,7 +2,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { ListsContext } from '../../store/ListsContextProvider'
 import { UserAuth } from '../auth/AuthContext'
-import { PlusIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
+import {
+  PlusIcon,
+  ArrowUturnLeftIcon,
+  TrashIcon,
+} from '@heroicons/react/24/solid'
 
 const List = () => {
   const { user } = UserAuth()
@@ -17,7 +21,7 @@ const List = () => {
     navigate('/')
   }
 
-  const addFoodItem = () => {
+  const addFoodItemHandler = () => {
     if (itemNameRef.current.value !== '') {
       const foodItem = {
         name: itemNameRef.current.value,
@@ -28,11 +32,16 @@ const List = () => {
     }
   }
 
+  const deleteFoodItemHandler = (foodItem, e) => {
+    e.preventDefault()
+    listsCtx.deleteFoodItem(foodItem)
+  }
+
   const itemNameChangeHandler = (event) => {
     setItemName(event.target.value)
   }
 
-  const foodItemCheckHandler = (index) => {
+  const foodItemCheckHandler = (index, e) => {
     let foodItemsCheckedStatus = listsCtx.currentList.foodItems
     let checkbox = foodItemsCheckedStatus[index]
 
@@ -46,10 +55,12 @@ const List = () => {
     listsCtx.updateList(listsCtx.currentList)
   }
 
-  const show = () => {
-    console.log('lists', listsCtx.lists)
+  const show = (e) => {
+    e.preventDefault()
+
+    /*    console.log('lists', listsCtx.lists)
     console.log('current list', listsCtx.currentList)
-    console.log('food items', listsCtx.currentList.foodItems)
+    console.log('food items', listsCtx.currentList.foodItems)*/
   }
 
   useEffect(() => {
@@ -72,23 +83,33 @@ const List = () => {
       {listsCtx.currentList.foodItems &&
         listsCtx.currentList.foodItems.map((foodItem, index) => (
           <li key={index}>
-            <label className='flex items-center bg-zinc-800 mt-2 px-4 py-3 mx-2 rounded cursor-pointer'>
-              <input
-                type='checkbox'
-                checked={foodItem.checked}
-                onChange={() => foodItemCheckHandler(index)}
-                id={`checkbox-${index}`}
-                name={foodItem.name}
-                className='w-7 h-7 text-yellow-500 bg-zinc-800
+            <label
+              className='flex items-center bg-zinc-800 mt-2 px-4 py-3 mx-2 rounded
+            cursor-pointer justify-between'
+            >
+              <div className='flex items-center'>
+                <input
+                  type='checkbox'
+                  checked={foodItem.checked}
+                  onChange={(e) => foodItemCheckHandler(index, e)}
+                  id={`checkbox-${index}`}
+                  name={foodItem.name}
+                  className='w-7 h-7 text-yellow-500 bg-zinc-800
                 focus:ring-offset-0 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
-              />
+                />
 
-              <label
-                className='ml-3 text-xl text-white flex items-center content-center place-items-center break-all cursor-pointer'
-                htmlFor={`checkbox-${index}`}
-              >
-                {foodItem.name}
-              </label>
+                <label
+                  className='ml-3 text-xl text-white flex items-center content-center place-items-center break-all cursor-pointer'
+                  htmlFor={`checkbox-${index}`}
+                >
+                  {foodItem.name}
+                </label>
+              </div>
+
+              <TrashIcon
+                className='h-7 w-7 text-rose-500'
+                onClick={(e) => deleteFoodItemHandler(foodItem, e)}
+              />
             </label>
           </li>
         ))}
@@ -136,9 +157,9 @@ const List = () => {
             <button
               className='border w-10 h-10 ml-2 text-xl dark:text-white border-amber-300
               rounded flex items-center justify-center'
-              onClick={addFoodItem}
+              onClick={addFoodItemHandler}
             >
-              <PlusIcon className='w-5 h-5 text-amber-300' />
+              <PlusIcon className='w-6 h-6 text-amber-300' />
             </button>
           </div>
 
