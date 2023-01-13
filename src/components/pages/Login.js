@@ -33,7 +33,7 @@ const Login = () => {
             Email Address
           </label>
           <input
-            value={'demo@gmail.com'}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             className='border-0 text-white bg-zinc-700 p-3'
             type='email'
@@ -42,7 +42,7 @@ const Login = () => {
         <div className='flex dark:text-white flex-col py-2'>
           <label className='py-2 font-medium'>Password</label>
           <input
-            value={'123123'}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             className='border-0 bg-zinc-700 p-3 text-white'
             type='password'

@@ -2,7 +2,13 @@ import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../auth/AuthContext'
 import { ListsContext } from '../../store/ListsContextProvider'
-
+import {
+  CheckIcon,
+  CheckCircleIcon,
+  MinusIcon,
+  XMarkIcon,
+  ShoppingCartIcon,
+} from '@heroicons/react/24/solid'
 const Home = () => {
   const { user, logout } = UserAuth()
   const navigate = useNavigate()
@@ -32,11 +38,26 @@ const Home = () => {
       {listsCtx.lists &&
         listsCtx.lists.map((list) => (
           <div
-            className='h-28	bg-yellow-500 rounded list-none cursor-pointer'
+            className='h-28	bg-zinc-800 rounded list-none cursor-pointer
+             overflow-hidden	'
             key={list.urlId}
             onClick={() => listRedirect(list)}
           >
-            {list.urlId}
+            <ul className='text-neutral-400 font-normal px-2 py-1 '>
+              {list.foodItems.map((item) => (
+                <li className='flex items-center '>
+                  <input
+                    type='checkbox'
+                    checked={item.checked}
+                    className='w-4 h-4 text-amber-400 mr-1.5 bg-transparent focus:ring-offset-0
+                    border-amber-400/80 border-2 focus:ring-0 ring-0 rounded-full cursor-pointer'
+                  />
+
+                  {item.name}
+                </li>
+              ))}
+            </ul>
+
             {/*<button onClick={() => listsCtx.deleteList(list.id)}>Delete</button>*/}
           </div>
         ))}

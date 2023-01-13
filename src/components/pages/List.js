@@ -65,7 +65,6 @@ const List = () => {
 
   useEffect(() => {
     return () => {
-      console.log('clear')
       // clear the current list when leaving the list page
       listsCtx.setCurrentList({ list: {} })
     }
@@ -73,7 +72,6 @@ const List = () => {
 
   useEffect(() => {
     if (listsCtx.currentList.foodItems) {
-      console.log('no current list')
       listsCtx.setCurrentList({ urlId: params.urlId })
     }
   }, [params.urlId])
