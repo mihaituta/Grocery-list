@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { ListsContext } from '../../store/ListsContextProvider'
 import { UserAuth } from '../auth/AuthContext'
-import { PlusIcon } from '@heroicons/react/24/solid'
+import { PlusIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
 
 const List = () => {
   const { user } = UserAuth()
@@ -10,7 +10,6 @@ const List = () => {
   const navigate = useNavigate()
   const listsCtx = useContext(ListsContext)
   const [itemName, setItemName] = useState('')
-  const [itemChecked, setItemChecked] = useState(false)
   const itemNameRef = useRef('')
 
   const deleteList = () => {
@@ -73,7 +72,7 @@ const List = () => {
       {listsCtx.currentList.foodItems &&
         listsCtx.currentList.foodItems.map((foodItem, index) => (
           <li key={index}>
-            <label className='flex items-center bg-zinc-800 mt-2 px-4 py-3 mx-2 rounded'>
+            <label className='flex items-center bg-zinc-800 mt-2 px-4 py-3 mx-2 rounded cursor-pointer'>
               <input
                 type='checkbox'
                 checked={foodItem.checked}
@@ -81,11 +80,11 @@ const List = () => {
                 id={`checkbox-${index}`}
                 name={foodItem.name}
                 className='w-7 h-7 text-yellow-500 bg-zinc-800
-                focus:ring-offset-0 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full '
+                focus:ring-offset-0 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
               />
 
               <label
-                className='ml-3 text-xl text-white flex items-center content-center place-items-center break-all'
+                className='ml-3 text-xl text-white flex items-center content-center place-items-center break-all cursor-pointer'
                 htmlFor={`checkbox-${index}`}
               >
                 {foodItem.name}
@@ -100,13 +99,21 @@ const List = () => {
     <>
       <div className='bg-neutral-900 min-h-screen min-h-full'>
         <div className='bg-zinc-800 p-4'>
+          <div
+            className='flex items-center cursor-pointer'
+            onClick={() => navigate('/')}
+          >
+            <ArrowUturnLeftIcon className='text-amber-300 w-5 h-5' />
+            <p className='text-amber-300 text-xl ml-2'>Lists</p>
+          </div>
+
           <div className='flex flex-row items-center justify-between '>
             <h1 className='dark:text-white text-3xl font-semibold py-2'>
               Grocery list
             </h1>
             <button
               onClick={deleteList}
-              className='border px-6 h-11 text-lg  text-amber-300 border-amber-300'
+              className='border px-6 h-11 text-lg text-amber-300 border-amber-300'
             >
               Delete list
             </button>

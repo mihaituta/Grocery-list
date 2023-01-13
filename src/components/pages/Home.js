@@ -32,7 +32,7 @@ const Home = () => {
       {listsCtx.lists &&
         listsCtx.lists.map((list) => (
           <div
-            className='h-28	bg-yellow-500 rounded list-none'
+            className='h-28	bg-yellow-500 rounded list-none cursor-pointer'
             key={list.urlId}
             onClick={() => listRedirect(list)}
           >
@@ -52,7 +52,7 @@ const Home = () => {
           </h1>
           <button
             onClick={handleLogout}
-            className='border px-6 h-11 text-lg dark:text-white'
+            className='border px-6 h-11 text-lg text-amber-300 border-amber-300'
           >
             Logout
           </button>
@@ -61,7 +61,7 @@ const Home = () => {
           {user && user.email}
         </p>
         <button
-          className='border px-6 h-11 text-xl dark:text-white'
+          className='border px-6 h-11 text-xl text-amber-300 border-amber-300'
           onClick={listsCtx.addList}
         >
           Add list
