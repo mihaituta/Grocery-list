@@ -47,21 +47,21 @@ const Home = () => {
     <div className='bg-neutral-900 min-h-screen min-h-full'>
       <div className='bg-zinc-800 p-4'>
         <div className='flex flex-row items-center justify-between '>
-          <h1 className='dark:text-white text-4xl font-semibold py-4'>
+          <h1 className='dark:text-white text-3xl font-semibold py-2'>
             Grocery list
           </h1>
           <button
             onClick={handleLogout}
-            className='border px-6 h-12 text-lg dark:text-white'
+            className='border px-6 h-11 text-lg dark:text-white'
           >
             Logout
           </button>
         </div>
-        <p className='dark:text-white text-xl mt-4 mb-6'>
+        <p className='dark:text-white text-base mt-2 mb-4'>
           {user && user.email}
         </p>
         <button
-          className='border px-6 h-12 text-xl dark:text-white'
+          className='border px-6 h-11 text-xl dark:text-white'
           onClick={listsCtx.addList}
         >
           Add list

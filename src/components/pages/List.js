@@ -48,9 +48,9 @@ const List = () => {
       {listsCtx.currentList.foodItems &&
         listsCtx.currentList.foodItems.map((foodItem, index) => (
           <li key={index}>
-            <label className='flex items-center bg-zinc-800 mt-3 px-4 py-4 mx-3 rounded '>
+            <label className='flex items-center bg-zinc-800 mt-2 px-4 py-3 mx-2 rounded '>
               <input
-                className='w-7 h-7 text-sky-600  bg-zinc-800
+                className='w-6 h-6 text-sky-600  bg-zinc-800
                 focus:ring-offset-0 border-2 border-white focus:ring-0 ring-0 rounded-full '
                 type='checkbox'
                 id={`checkbox-${index}`}
@@ -58,7 +58,7 @@ const List = () => {
               />
 
               <label
-                className='ml-3 text-2xl text-white flex items-center content-center place-items-center'
+                className='ml-3 text-xl text-white flex items-center content-center place-items-center'
                 htmlFor={`checkbox-${index}`}
               >
                 {foodItem.name}
@@ -73,14 +73,14 @@ const List = () => {
     <>
       <div className='bg-neutral-900 min-h-screen min-h-full'>
         <div className='bg-zinc-800 p-4'>
-          <h1 className='dark:text-white text-4xl font-semibold py-4'>
+          <h1 className='dark:text-white text-3xl font-semibold py-2'>
             Grocery list
           </h1>
-          <p className='dark:text-white text-xl mt-4 mb-6'>
+          <p className='dark:text-white text-base mt-2 mb-4'>
             {user && user.email}
           </p>
           <button
-            className='border px-6 h-12 text-xl dark:text-white'
+            className='border px-6 h-11 text-xl dark:text-white'
             onClick={addFood}
           >
             Add Food
