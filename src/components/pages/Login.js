@@ -49,7 +49,7 @@ const Login = () => {
           />
         </div>
         <p className='py-2  text-white'>
-          Don't have an account yet?{' '}
+          Don't have an account yet?
           <Link to='/register' className='underline'>
             Register
           </Link>

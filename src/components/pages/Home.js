@@ -40,15 +40,16 @@ const Home = () => {
           <div
             className='h-28	bg-zinc-800 rounded list-none cursor-pointer
              overflow-hidden	'
-            key={list.urlId}
+            key={list.id}
             onClick={() => listRedirect(list)}
           >
             <ul className='text-neutral-400 font-normal px-2 py-1 '>
               {list.foodItems.map((item) => (
-                <li className='flex items-center '>
+                <li key={item.id} className='flex items-center '>
                   <input
                     type='checkbox'
                     checked={item.checked}
+                    readOnly
                     className='w-4 h-4 text-amber-400 mr-1.5 bg-transparent focus:ring-offset-0
                     border-amber-400/80 border-2 focus:ring-0 ring-0 rounded-full cursor-pointer'
                   />

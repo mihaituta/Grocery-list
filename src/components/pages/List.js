@@ -21,7 +21,7 @@ const List = () => {
     navigate('/')
   }
 
-  const addFoodItemHandler = () => {
+  const addFoodItemHandler = (e) => {
     if (itemNameRef.current.value !== '') {
       const foodItem = {
         name: itemNameRef.current.value,
@@ -92,7 +92,7 @@ const List = () => {
                   onChange={(e) => foodItemCheckHandler(index, e)}
                   id={`checkbox-${index}`}
                   name={foodItem.name}
-                  className='w-7 h-7 text-yellow-500 bg-zinc-800
+                  className='w-6 h-6 text-yellow-500 bg-zinc-800
                 focus:ring-offset-0 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
                 />
 
@@ -105,7 +105,7 @@ const List = () => {
               </div>
 
               <TrashIcon
-                className='h-7 w-7 text-rose-500'
+                className='h-6 w-6 text-amber-300'
                 onClick={(e) => deleteFoodItemHandler(foodItem, e)}
               />
             </label>
@@ -146,6 +146,7 @@ const List = () => {
               ref={itemNameRef}
               value={itemName}
               onChange={itemNameChangeHandler}
+              onKeyDown={(e) => e.key === 'Enter' && addFoodItemHandler(e)}
               // placeholder='Enter item here...'
               placeholder='Add new item...'
               className='bg-neutral-900 text-white text-lg placeholder-neutral-600
