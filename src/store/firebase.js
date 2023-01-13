@@ -12,6 +12,8 @@ import {
   query,
   deleteDoc,
   orderBy,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -43,4 +45,6 @@ export {
   query,
   deleteDoc,
   orderBy,
+  updateDoc,
+  arrayUnion,
 }

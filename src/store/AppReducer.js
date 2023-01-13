@@ -20,11 +20,27 @@ export default function AppReducer(state, action) {
           ),
         }
       }
+      return {
+        ...state,
+      }
 
     case 'ADD_LIST':
       return {
         ...state,
         lists: [action.payload, ...state.lists],
+      }
+
+    case 'UPDATE_LIST':
+      return {
+        ...state,
+        // find the board in array and replace it with the new one
+        lists: [
+          ...state.lists.map((list) =>
+            list.id !== action.payload.id
+              ? list
+              : { ...list, ...action.payload }
+          ),
+        ],
       }
 
     case 'DELETE_LIST':

@@ -13,9 +13,10 @@ function App() {
     <ListsContextProvider>
       <AuthContextProvider>
         <Routes>
-          <Route path='/register' element={<Register />} />
+          <Route name='sms' path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route
+            name='home'
             path='/'
             element={
               <ProtectedRoute>
@@ -24,7 +25,8 @@ function App() {
             }
           />
           <Route
-            path='/:urlId'
+            name='list'
+            path='/list/:urlId'
             element={
               <ProtectedRoute>
                 <List />

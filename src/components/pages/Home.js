@@ -18,8 +18,8 @@ const Home = () => {
   }
 
   const listRedirect = (list) => {
-    listsCtx.setCurrentList(list)
-    navigate('/' + list.urlId)
+    listsCtx.setCurrentList({ list })
+    navigate('/list/' + list.urlId)
   }
 
   const show = () => {
@@ -68,7 +68,7 @@ const Home = () => {
           className='dark:text-white border px-6 py-2  m-4'
           onClick={show}
         >
-          Add list
+          Show Current List
         </button>
       </div>
 
