@@ -55,8 +55,6 @@ export default function AppReducer(state, action) {
       // updating the list's food items with the updated checked items
       list.foodItems = action.payload.list
 
-      console.log(list)
-      console.log('state lists', state.lists)
       return {
         ...state,
       }

@@ -33,7 +33,7 @@ const Home = () => {
         listsCtx.lists.map((list) => (
           <div
             className='h-28	bg-zinc-800 rounded list-none cursor-pointer
-             overflow-hidden	'
+             overflow-hidden drop-shadow-md'
             key={list.id}
             onClick={() => listRedirect(list)}
           >

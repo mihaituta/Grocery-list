@@ -25,6 +25,7 @@ import appReducer from './AppReducer'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const initState = {
+  themeBlue: 'sky-500',
   lists: [],
   currentList: {},
   setCurrentList: (payload) => {},
@@ -236,6 +237,7 @@ export const ListsContextProvider = ({ children }) => {
   }
 
   const listsContext = {
+    themeBlue: state.themeBlue,
     lists: state.lists,
     currentList: state.currentList,
     setCurrentList: setCurrentListHandler,
