@@ -100,11 +100,11 @@ const List = () => {
             }
           >
             {completed ? (
-              <CheckCircleIcon className='w-6 h-6' />
+              <CheckCircleIcon className='w-6 h-6 mr-0.5' />
             ) : (
-              <ShoppingCartIcon className='w-6 h-6 mb-1' />
+              <ShoppingCartIcon className='w-6 h-6 mb-1 mr-1' />
             )}
-            <p className='ml-1 text-2xl'>
+            <p className=' text-2xl'>
               {nrOfCheckedItems}/{foodItems.length}
             </p>
           </div>
