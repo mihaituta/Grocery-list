@@ -2,13 +2,7 @@ import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../auth/AuthContext'
 import { ListsContext } from '../../store/ListsContextProvider'
-import {
-  CheckIcon,
-  CheckCircleIcon,
-  MinusIcon,
-  XMarkIcon,
-  ShoppingCartIcon,
-} from '@heroicons/react/24/solid'
+
 const Home = () => {
   const { user, logout } = UserAuth()
   const navigate = useNavigate()
