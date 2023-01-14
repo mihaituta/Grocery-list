@@ -145,13 +145,13 @@ const List = () => {
       </div>*/
 
     <>
-      <div className='my-2 mx-2 bg-zinc-800 text-white rounded-full'>
+      <div className='my-2 mx-2 bg-zinc-800 text-white rounded-full transition ease-in-out duration-300 '>
         <div
           className={
             progressBarValue() === 100
-              ? `bg-${themeBlue} p-0.5 text-xs font-bold text-center leading-none rounded-full`
+              ? `bg-${themeBlue} flex items-center justify-center p-0.5 text-xs font-bold text-center leading-none rounded-full`
               : progressBarValue() > 0
-              ? `bg-${themeBlue} p-0.5 text-xs font-bold text-center leading-none rounded-l-full`
+              ? `bg-${themeBlue} flex items-center justify-center p-0.5 text-xs font-bold text-center leading-none rounded-l-full`
               : 'invisible h-4'
           }
           style={{ width: `${progressBarValue()}%` }}
