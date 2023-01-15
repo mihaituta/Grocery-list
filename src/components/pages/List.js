@@ -127,41 +127,26 @@ const List = () => {
 
   const progressBar = (
     <>
-      <div className='flex items-center mt-2 h-4'>
-        {progressBarValue() > 0 && (
-          <p className='ml-2 text-s font-semibold text-white'>
-            {progressBarValue()}%
-          </p>
-        )}
+      {foodItems && (
+        <div className='flex items-center mt-2 h-4 transition-width ease-in-out'>
+          {progressBarValue() > 0 && (
+            <p className='ml-2 text-s font-semibold text-white'>
+              {progressBarValue()}%
+            </p>
+          )}
 
-        <div className='mx-2 bg-zinc-800 rounded-full w-full h-3'>
-          <div
-            className={
-              progressBarValue() === 100
-                ? `bg-${themeBlue} justify-center h-3 text-xs font-bold text-center leading-none rounded-full`
-                : progressBarValue() > 0
-                ? `bg-amber-300 text-xs font-bold text-center leading-none rounded-l-full h-3 `
-                : `invisible bg-${themeBlue}`
-            }
-            style={{ width: `${progressBarValue()}%` }}
-          />
+          <div className='mx-2 bg-zinc-800 rounded-full w-full h-3'>
+            <div
+              className={
+                progressBarValue() === 100
+                  ? `bg-${themeBlue} duration-300 justify-center h-3 text-xs font-bold text-center leading-none rounded-full `
+                  : `bg-amber-300 duration-300 text-xs font-bold text-center leading-none rounded-l-full h-3 `
+              }
+              style={{ width: `${progressBarValue()}%` }}
+            />
+          </div>
         </div>
-      </div>
-
-      {/* <div className='my-2 mx-2 bg-zinc-800 text-white rounded-full transition ease-in-out duration-300 '>
-        <div
-          className={
-            progressBarValue() === 100
-              ? `bg-${themeBlue} flex items-center justify-center p-0.5 text-xs font-bold text-center leading-none rounded-full`
-              : progressBarValue() > 0
-              ? `bg-${themeBlue} flex items-center justify-center p-0.5 text-xs font-bold text-center leading-none rounded-l-full`
-              : 'invisible h-4'
-          }
-          style={{ width: `${progressBarValue()}%` }}
-        >
-          {progressBarValue()}%
-        </div>
-      </div>*/}
+      )}
     </>
   )
 
