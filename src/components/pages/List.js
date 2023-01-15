@@ -127,7 +127,7 @@ const List = () => {
 
   const progressBar = (
     <>
-      {foodItems && (
+      {foodItems && foodItems.length > 0 && (
         <div className='flex items-center mt-2 h-4 transition-width ease-in-out'>
           {progressBarValue() > 0 && (
             <p className='ml-2 text-s font-semibold text-white'>
