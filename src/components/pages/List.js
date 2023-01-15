@@ -21,7 +21,6 @@ const List = () => {
   const itemNameRef = useRef('')
   const currentList = listsCtx.currentList
   const foodItems = listsCtx.currentList.foodItems
-  const themeBlue = 'amber-300'
 
   const deleteList = () => {
     listsCtx.deleteList(currentList.id)
@@ -97,7 +96,7 @@ const List = () => {
             className={
               completed
                 ? 'ml-4 flex items-center text-white bg-green-500/80 rounded pl-1 pr-1.5 py-1'
-                : `ml-4 flex items-center text-${themeBlue} rounded pl-1 pr-1.5 py-1`
+                : 'ml-4 flex items-center text-amber-300 rounded pl-1 pr-1.5 py-1'
             }
           >
             {completed ? (
@@ -128,20 +127,23 @@ const List = () => {
   const progressBar = (
     <>
       {foodItems && foodItems.length > 0 && (
-        <div className='flex items-center mt-2 h-4 transition-width ease-in-out drop-shadow-md'>
+        <div className='flex items-center mt-4 h-4 transition-width ease-in-out'>
           {progressBarValue() > 0 && (
-            <p className='ml-2 text-s font-semibold text-white'>
+            <p className='text-s font-semibold text-white'>
               {progressBarValue()}%
             </p>
           )}
 
-          <div className='mx-2 bg-zinc-800 rounded-full w-full h-3'>
+          <div
+            className={`${
+              progressBarValue() > 0 ? 'ml-3' : ''
+            } bg-neutral-900 rounded-full w-full h-3`}
+          >
             <div
-              className={
-                progressBarValue() === 100
-                  ? `bg-${themeBlue} duration-300 justify-center h-3 text-xs font-bold text-center leading-none rounded-full `
-                  : `bg-amber-300 duration-300 text-xs font-bold text-center leading-none rounded-l-full h-3 `
-              }
+              className={`bg-amber-300 duration-300 text-center h-3 text-xs font-bold leading-none 
+              ${
+                progressBarValue() === 100 ? 'rounded-full' : 'rounded-l-full'
+              }  `}
               style={{ width: `${progressBarValue()}%` }}
             />
           </div>
@@ -167,8 +169,8 @@ const List = () => {
                   onChange={(e) => foodItemCheckHandler(index, e)}
                   id={`checkbox-${index}`}
                   name={foodItem.name}
-                  className={`w-6 h-6 text-${themeBlue} bg-zinc-800
-                focus:ring-offset-0 border-2 border-${themeBlue} focus:ring-0 ring-0 rounded-full cursor-pointer`}
+                  className='w-6 h-6 text-amber-300 bg-zinc-800
+                focus:ring-offset-0 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
                 />
 
                 {/*ITEM NAME*/}
@@ -182,7 +184,7 @@ const List = () => {
 
               {/*DELETE ITEMS BTN*/}
               <TrashIcon
-                className={`h-6 w-6 text-${themeBlue}`}
+                className='h-6 w-6 text-amber-300'
                 onClick={(e) => deleteFoodItemHandler(foodItem, e)}
               />
             </label>
@@ -194,35 +196,33 @@ const List = () => {
   return (
     <>
       <div className='bg-neutral-900 min-h-screen min-h-full'>
-        <div className='bg-zinc-800 p-4 drop-shadow-md'>
+        <div className='bg-zinc-800 p-4 drop-shadow-lg sticky top-0 z-30'>
           {/*BACK BUTTON*/}
           <div
             className='flex items-center cursor-pointer'
             onClick={() => navigate('/')}
           >
-            <ArrowUturnLeftIcon className={`text-${themeBlue} w-5 h-5`} />
-            <p className={`text-${themeBlue} text-xl ml-2`}>Lists</p>
+            <ArrowUturnLeftIcon className='text-amber-300 w-5 h-5' />
+            <p className='text-amber-300 text-xl ml-2'>Lists</p>
           </div>
 
           <div className='flex flex-row items-center justify-between '>
             {/*TITLE TEXT*/}
-            <h1 className='dark:text-white text-3xl font-semibold py-2'>
+            <h1 className='text-white text-3xl font-semibold py-2'>
               Grocery list
             </h1>
 
             {/*DELETE BUTTON*/}
             <button
               onClick={deleteList}
-              className={`border px-6 h-11 text-lg text-${themeBlue} border-${themeBlue}`}
+              className='border px-6 h-11 text-lg text-amber-300 border-amber-300'
             >
               Delete list
             </button>
           </div>
 
           {/*USER EMAIL*/}
-          <p className='dark:text-white text-base mt-2 mb-4'>
-            {user && user.email}
-          </p>
+          <p className='text-white text-base mt-2 mb-4'>{user && user.email}</p>
 
           <div className='flex items-center justify-between	'>
             {/*INPUT ADD ITEM*/}
@@ -241,11 +241,11 @@ const List = () => {
 
               {/*ADD BUTTON*/}
               <button
-                className={`border w-10 h-10 ml-1.5 text-xl dark:text-white border-${themeBlue}
-                  rounded flex items-center justify-center`}
+                className='border w-10 h-10 ml-1.5 text-xl text-white border-amber-300
+                  rounded flex items-center justify-center'
                 onClick={addFoodItemHandler}
               >
-                <PlusIcon className={`w-6 h-6 text-${themeBlue}`} />
+                <PlusIcon className='w-6 h-6 text-amber-300' />
               </button>
             </div>
 
@@ -253,13 +253,14 @@ const List = () => {
           </div>
 
           {/*<button
-          className='dark:text-white border px-6 py-2  m-4'
+          className='text-white border px-6 py-2  m-4'
           onClick={show}
         >
           Show Current List
         </button>*/}
+          {progressBar}
         </div>
-        {progressBar}
+
         {foodItemsList}
       </div>
     </>

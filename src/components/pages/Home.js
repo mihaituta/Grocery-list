@@ -61,9 +61,9 @@ const Home = () => {
 
   return (
     <div className='bg-neutral-900 min-h-screen min-h-full'>
-      <div className='bg-zinc-800 p-4 drop-shadow-md'>
+      <div className='bg-zinc-800 p-4 drop-shadow-lg sticky top-0 z-30'>
         <div className='flex flex-row items-center justify-between '>
-          <h1 className='dark:text-white text-3xl font-semibold py-2'>
+          <h1 className='text-white text-3xl font-semibold py-2'>
             Grocery list
           </h1>
           <button
@@ -73,9 +73,7 @@ const Home = () => {
             Logout
           </button>
         </div>
-        <p className='dark:text-white text-base mt-2 mb-4'>
-          {user && user.email}
-        </p>
+        <p className='text-white text-base mt-2 mb-4'>{user && user.email}</p>
         <button
           className='border px-6 h-11 text-xl text-amber-300 border-amber-300'
           onClick={listsCtx.addList}
@@ -83,7 +81,7 @@ const Home = () => {
           Add list
         </button>
         {/*<button
-          className='dark:text-white border px-6 py-2  m-4'
+          className='text-white border px-6 py-2  m-4'
           onClick={show}
         >
           Show Current List
