@@ -128,7 +128,7 @@ const List = () => {
   const progressBar = (
     <>
       {foodItems && foodItems.length > 0 && (
-        <div className='flex items-center mt-2 h-4 transition-width ease-in-out'>
+        <div className='flex items-center mt-2 h-4 transition-width ease-in-out drop-shadow-md'>
           {progressBarValue() > 0 && (
             <p className='ml-2 text-s font-semibold text-white'>
               {progressBarValue()}%
@@ -194,7 +194,7 @@ const List = () => {
   return (
     <>
       <div className='bg-neutral-900 min-h-screen min-h-full'>
-        <div className='bg-zinc-800 p-4'>
+        <div className='bg-zinc-800 p-4 drop-shadow-md'>
           {/*BACK BUTTON*/}
           <div
             className='flex items-center cursor-pointer'

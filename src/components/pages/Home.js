@@ -61,7 +61,7 @@ const Home = () => {
 
   return (
     <div className='bg-neutral-900 min-h-screen min-h-full'>
-      <div className='bg-zinc-800 p-4'>
+      <div className='bg-zinc-800 p-4 drop-shadow-md'>
         <div className='flex flex-row items-center justify-between '>
           <h1 className='dark:text-white text-3xl font-semibold py-2'>
             Grocery list
