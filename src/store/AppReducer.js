@@ -31,16 +31,18 @@ export default function AppReducer(state, action) {
       }
 
     case 'UPDATE_LIST':
+      const listsAfterUpdate = [
+        ...state.lists.map((list) =>
+          list.id !== action.payload.id ? list : { ...list, ...action.payload }
+        ),
+      ]
+      const sortedListsByDate = listsAfterUpdate.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      )
       return {
         ...state,
-        // find the board in array and replace it with the new one
-        lists: [
-          ...state.lists.map((list) =>
-            list.id !== action.payload.id
-              ? list
-              : { ...list, ...action.payload }
-          ),
-        ],
+        // find the list in array and replace it with the new one
+        lists: sortedListsByDate,
       }
 
     case 'DELETE_LIST':
@@ -55,6 +57,15 @@ export default function AppReducer(state, action) {
       // updating the list's food items with the updated checked items
       list.foodItems = action.payload.list
 
+      return {
+        ...state,
+      }
+    }
+
+    case 'UPDATE_DATE': {
+      const list = state.lists.find((list) => list.id === action.payload.listId)
+      list.canUpdateDate = false
+      list.date = new Date().toISOString()
       return {
         ...state,
       }

@@ -57,7 +57,7 @@ const List = () => {
       listId: currentList.id,
     })
 
-    listsCtx.updateList(currentList)
+    listsCtx.updateList({ list: currentList })
   }
 
   const show = (e) => {
@@ -82,13 +82,20 @@ const List = () => {
   }, [params.urlId])
 
   const listStatus = () => {
+    // prettier-ignore
     const nrOfCheckedItems =
       foodItems &&
-      foodItems.reduce(
-        (nrOfChecks, foodItem) => nrOfChecks + (foodItem.checked === true),
-        0
-      )
+      foodItems.reduce((nrOfChecks, foodItem) => nrOfChecks + (foodItem.checked === true), 0)
+
     const completed = foodItems && nrOfCheckedItems === foodItems.length
+
+    // if list is completed, set canUpdateDate to false so the date will never be updated again
+    // prettier-ignore
+    if (completed && foodItems.length > 0 && currentList.canUpdateDate === true
+    ) {
+      listsCtx.updateList({ list: currentList, canUpdateDate: false })
+    }
+
     return (
       <div>
         {foodItems && foodItems.length > 0 && (
@@ -175,7 +182,7 @@ const List = () => {
 
                 {/*ITEM NAME*/}
                 <label
-                  className='ml-3 text-xl text-white flex items-center content-center place-items-center break-all cursor-pointer'
+                  className='ml-3 mr-3 text-xl text-white flex items-center content-center place-items-center break-all cursor-pointer'
                   htmlFor={`checkbox-${index}`}
                 >
                   {foodItem.name}

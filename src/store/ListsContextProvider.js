@@ -95,7 +95,7 @@ export const ListsContextProvider = ({ children }) => {
         date: new Date().toISOString(),
         urlId: nanoid(10),
         foodItems: [],
-        completed: false,
+        canUpdateDate: true,
       })
     } catch (error) {
       console.log(error)
@@ -104,12 +104,19 @@ export const ListsContextProvider = ({ children }) => {
   }
 
   // UPDATE LIST
-  const updateListHandler = async (list) => {
+  const updateListHandler = async (payload) => {
     const userId = fbAuth.currentUser.uid
-    const listsQuery = doc(fbDB, `users/${userId}/lists`, list.id)
+    const listsQuery = doc(fbDB, `users/${userId}/lists`, payload.list.id)
 
-    const listData = {
-      foodItems: list.foodItems,
+    let listData = {
+      foodItems: payload.list.foodItems,
+    }
+
+    if (payload.canUpdateDate === false) {
+      listData = {
+        canUpdateDate: false,
+        date: new Date().toISOString(),
+      }
     }
 
     try {
@@ -175,7 +182,7 @@ export const ListsContextProvider = ({ children }) => {
 
   // TOGGLE FOOD ITEM CHECKBOX
   const toggleFoodItemCheckboxHandler = async (payload) => {
-    dispatchListsAction({ type: 'TOGGLE_FOODITEM_CHECKBOX', payload: payload })
+    dispatchListsAction({ type: 'TOGGLE_FOODITEM_CHECKBOX', payload })
   }
 
   // SET CURRENT LIST
@@ -201,6 +208,7 @@ export const ListsContextProvider = ({ children }) => {
             const id = change.doc.id
             const listData = {
               id,
+              canUpdateDate: list.canUpdateDate,
               date: new Date(list.date),
               urlId: list.urlId,
               foodItems: list.foodItems,
