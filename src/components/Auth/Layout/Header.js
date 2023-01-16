@@ -2,7 +2,13 @@ import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../AuthContext'
 
-const Header = ({ children, listPage, buttonText, buttonFunction }) => {
+const Header = ({
+  children,
+  listPage,
+  buttonText,
+  buttonFunction,
+  foodItems,
+}) => {
   const { user } = UserAuth()
   const navigate = useNavigate()
 
@@ -28,7 +34,25 @@ const Header = ({ children, listPage, buttonText, buttonFunction }) => {
           {buttonText}
         </button>
       </div>
-      <p className='text-white text-base mt-2 mb-4'>{user && user.email}</p>
+      <div className='flex items-center justify-between my-4'>
+        <p className='text-white text-base mt-2 mb-4'>{user && user.email}</p>
+        {listPage && foodItems && foodItems.length > 0 && (
+          <div className='flex flex-col items-end'>
+            <div className='text-white text-xl mb-1'>Total: 243 Lei</div>
+            <div className='flex items-center ml-4'>
+              <input
+                id='pricesInput'
+                type='checkbox'
+                className='w-4 h-4 text-amber-300 bg-zinc-800 mt-0.5
+                focus:ring-offset-0 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
+              />
+              <label className='text-white ml-2 text-lg' htmlFor='pricesInput'>
+                Prices
+              </label>
+            </div>
+          </div>
+        )}
+      </div>
 
       {children}
     </div>

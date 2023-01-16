@@ -1,7 +1,10 @@
 import { TrashIcon, Bars3Icon } from '@heroicons/react/24/solid'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { useState } from 'react'
 
 const FoodItems = ({ currentList, foodItems, listsCtx }) => {
+  const [toggle, setToggle] = useState(false)
+
   const deleteFoodItemHandler = (foodItem, e) => {
     e.preventDefault()
     listsCtx.deleteFoodItem(foodItem)
@@ -71,16 +74,26 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
 
                             {/*ITEM NAME*/}
                             <label
-                              className='ml-3 mr-3 text-xl text-white flex items-center break-all pointer'
+                              className='ml-3 mr-3 text-xl text-white flex items-center break-all cursor-pointer'
                               htmlFor={`checkbox-${index}`}
                             >
                               {foodItem.name}
                             </label>
                           </div>
+                          {/*PRICE INPUT*/}
                           <div className='flex items-center'>
+                            {toggle && (
+                              <input
+                                type='text'
+                                placeholder='0'
+                                className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
+             border-0 focus:ring-0 ring-0 rounded h-8 w-14 mr-4'
+                              />
+                            )}
+
                             {/*DELETE ITEMS BTN*/}
                             <TrashIcon
-                              className='h-6 w-6 ml-4 text-amber-300'
+                              className='h-6 w-6 text-amber-300'
                               onClick={(e) =>
                                 deleteFoodItemHandler(foodItem, e)
                               }

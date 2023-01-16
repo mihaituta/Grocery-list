@@ -20,6 +20,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 const initState = {
   lists: [],
+  togglePrices: false,
   currentList: {},
   setCurrentList: (payload) => {},
   addList: (list) => {},
@@ -245,6 +246,7 @@ export const ListsContextProvider = ({ children }) => {
 
   const listsContext = {
     lists: state.lists,
+    togglePrices: state.togglePrices,
     currentList: state.currentList,
     setCurrentList: setCurrentListHandler,
     getLists: getListsHandler,
