@@ -28,6 +28,7 @@ const initState = {
   addFoodItem: (foodItem) => {},
   // ? editFoodItem: (item) => {},
   deleteFoodItem: (foodItem) => {},
+  reorderFoodItems: (list) => {},
   toggleFoodItemCheckbox: (payload) => {},
   setListsListener: null,
   unsubscribeListsListener: () => {},
@@ -179,6 +180,11 @@ export const ListsContextProvider = ({ children }) => {
     dispatchListsAction({ type: 'TOGGLE_FOODITEM_CHECKBOX', payload })
   }
 
+  //
+  const reorderFoodItemsHandler = async (payload) => {
+    dispatchListsAction({ type: 'REORDER_LIST_ITEMS', payload })
+  }
+
   // SET CURRENT LIST
   const setCurrentListHandler = (payload) => {
     dispatchListsAction({ type: 'SET_CURRENT_LIST', payload })
@@ -247,6 +253,7 @@ export const ListsContextProvider = ({ children }) => {
     deleteList: deleteListHandler,
     addFoodItem: addFoodItemHandler,
     deleteFoodItem: deleteFoodItemHandler,
+    reorderFoodItems: reorderFoodItemsHandler,
     toggleFoodItemCheckbox: toggleFoodItemCheckboxHandler,
     setListsListener: setListsListenerHandler,
     unsubscribeListsListener: state.unsubscribeListsListener,

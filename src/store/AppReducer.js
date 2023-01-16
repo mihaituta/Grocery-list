@@ -62,6 +62,17 @@ export default function AppReducer(state, action) {
       }
     }
 
+    case 'REORDER_LIST_ITEMS': {
+      const list = state.lists.find((list) => list.id === action.payload.listId)
+      console.log('list', list)
+      console.log('listid', action.payload.listId)
+      list.foodItems = action.payload.list
+
+      return {
+        ...state,
+      }
+    }
+
     case 'UPDATE_DATE': {
       const list = state.lists.find((list) => list.id === action.payload.listId)
       list.canUpdateDate = false

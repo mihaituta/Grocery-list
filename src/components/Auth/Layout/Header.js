@@ -29,14 +29,8 @@ const Header = ({ children, listPage, buttonText, buttonFunction }) => {
         </button>
       </div>
       <p className='text-white text-base mt-2 mb-4'>{user && user.email}</p>
-      {children}
 
-      {/*<button
-          className='text-white border px-6 py-2  m-4'
-          onClick={show}
-        >
-          Show Current List
-        </button>*/}
+      {children}
     </div>
   )
 }
