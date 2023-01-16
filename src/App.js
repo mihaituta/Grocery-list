@@ -1,12 +1,12 @@
-import Home from './components/pages/Home'
-import Register from './components/pages/Register'
-import Login from './components/pages/Login'
+import Home from './components/Pages/Home'
+import Register from './components/Pages/Register'
+import Login from './components/Pages/Login'
 import { Routes, Route } from 'react-router-dom'
-import { AuthContextProvider } from './components/auth/AuthContext'
-import ProtectedRoute from './components/auth/ProtectedRoute'
-import NotFound404 from './components/pages/NotFound404'
+import { AuthContextProvider } from './components/Auth/AuthContext'
+import ProtectedRoute from './components/Auth/ProtectedRoute'
+import NotFound404 from './components/Pages/NotFound404'
 import { ListsContextProvider } from './store/ListsContextProvider'
-import List from './components/pages/List'
+import List from './components/Pages/List'
 
 function App() {
   return (

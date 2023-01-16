@@ -29,7 +29,7 @@ export const AuthContextProvider = ({ children }) => {
         }
       })
       .catch((error) => {
-        if (error.code === 'auth/email-already-in-use') {
+        if (error.code === 'Auth/email-already-in-use') {
           console.log('Email already in use')
         }
       })
