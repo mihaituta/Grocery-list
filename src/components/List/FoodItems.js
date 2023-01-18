@@ -29,9 +29,9 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
     item.price = Number(foodItemPriceRefs.current[index].value)
 
     listsCtx.updateList({ foodItems, listId: currentList.id })
-  }
 
-  const foodItemPriceChangeHandler = (e) => {}
+    return
+  }
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return
