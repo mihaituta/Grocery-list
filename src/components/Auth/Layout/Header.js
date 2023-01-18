@@ -79,7 +79,7 @@ const Header = ({
                 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
               />
               <label className='text-white ml-2 text-lg' htmlFor='pricesInput'>
-                Prices
+                Empty prices
               </label>
             </div>
           </div>

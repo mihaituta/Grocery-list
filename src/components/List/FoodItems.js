@@ -1,8 +1,10 @@
 import { TrashIcon, Bars3Icon } from '@heroicons/react/24/solid'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const FoodItems = ({ currentList, foodItems, listsCtx }) => {
+  const foodItemPriceRefs = useRef([])
+
   const deleteFoodItemHandler = (foodItem, e) => {
     e.preventDefault()
     listsCtx.deleteFoodItem(foodItem)
@@ -21,6 +23,16 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
     listsCtx.updateList({ foodItems, listId: currentList.id })
   }
 
+  const editFoodItemPriceHandler = (index, e) => {
+    let item = foodItems[index]
+
+    item.price = Number(foodItemPriceRefs.current[index].value)
+
+    listsCtx.updateList({ foodItems, listId: currentList.id })
+  }
+
+  const foodItemPriceChangeHandler = (e) => {}
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return
 
@@ -28,6 +40,23 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
     foodItems.splice(result.destination.index, 0, reorderedItem)
 
     listsCtx.updateList({ foodItems, listId: currentList.id })
+  }
+
+  const showItems = (foodItem, index) => {
+    return (
+      <>
+        <input
+          type='number'
+          placeholder='0'
+          className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
+             border-0 focus:ring-0 ring-0 rounded h-7 w-14 mr-4'
+          ref={(el) => (foodItemPriceRefs.current[index] = el)}
+          defaultValue={foodItem.price}
+          onKeyDown={(e) => e.key === 'Enter' && e.target.blur()}
+          onBlur={(e) => editFoodItemPriceHandler(index, e)}
+        />
+      </>
+    )
   }
 
   return (
@@ -78,16 +107,13 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
                               {foodItem.name}
                             </label>
                           </div>
+
                           {/*PRICE INPUT*/}
                           <div className='flex items-center'>
-                            {currentList.togglePrices && (
-                              <input
-                                type='text'
-                                placeholder='0'
-                                className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
-             border-0 focus:ring-0 ring-0 rounded h-7 w-14 mr-4'
-                              />
-                            )}
+                            {currentList.togglePrices
+                              ? showItems(foodItem, index)
+                              : foodItem.price > 0 &&
+                                showItems(foodItem, index)}
 
                             {/*DELETE ITEMS BTN*/}
                             <TrashIcon
