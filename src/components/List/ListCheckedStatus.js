@@ -13,7 +13,7 @@ const ListCheckedStatus = ({ foodItems, currentList, listsCtx }) => {
   // prettier-ignore
   if (completed && foodItems.length > 0 && currentList.canUpdateDate === true
         ) {
-            listsCtx.updateList({ list: currentList, canUpdateDate: false })
+            listsCtx.updateList({ listId: currentList.id, canUpdateDate: false })
         }
 
   return (

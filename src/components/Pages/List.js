@@ -48,6 +48,8 @@ const List = () => {
         buttonFunction={deleteList}
         listPage={true}
         foodItems={foodItems}
+        currentList={currentList}
+        listsCtx={listsCtx}
       >
         <div className='flex items-center justify-between'>
           {/*INPUT ADD ITEM*/}

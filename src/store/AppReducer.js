@@ -62,11 +62,10 @@ export default function AppReducer(state, action) {
       }
     }
 
-    case 'REORDER_LIST_ITEMS': {
-      const list = state.lists.find((list) => list.id === action.payload.listId)
-      console.log('list', list)
-      console.log('listid', action.payload.listId)
-      list.foodItems = action.payload.list
+    case 'TOGGLE_LIST_PRICES': {
+      const list = state.lists.find((list) => list.id === action.payload.id)
+      // updating the list's food items with the updated checked items
+      list.togglePrices = action.payload.togglePrices
 
       return {
         ...state,

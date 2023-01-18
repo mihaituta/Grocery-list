@@ -20,7 +20,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 const initState = {
   lists: [],
-  togglePrices: false,
   currentList: {},
   setCurrentList: (payload) => {},
   addList: (list) => {},
@@ -29,8 +28,8 @@ const initState = {
   addFoodItem: (foodItem) => {},
   // ? editFoodItem: (item) => {},
   deleteFoodItem: (foodItem) => {},
-  reorderFoodItems: (list) => {},
   toggleFoodItemCheckbox: (payload) => {},
+  toggleListPrices: (payload) => {},
   setListsListener: null,
   unsubscribeListsListener: () => {},
 }
@@ -63,6 +62,9 @@ export const ListsContextProvider = ({ children }) => {
           date: list.date,
           urlId: list.urlId,
           foodItems: list.foodItems,
+          canUpdateDate: list.canUpdateDate,
+          totalPrice: list.totalPrice,
+          togglePrices: list.togglePrices,
         }
         updatedLists.push(temp)
       })
@@ -92,6 +94,8 @@ export const ListsContextProvider = ({ children }) => {
         urlId: nanoid(10),
         foodItems: [],
         canUpdateDate: true,
+        totalPrice: 0,
+        togglePrices: false,
       })
     } catch (error) {
       console.log(error)
@@ -102,10 +106,16 @@ export const ListsContextProvider = ({ children }) => {
   // UPDATE LIST
   const updateListHandler = async (payload) => {
     const userId = fbAuth.currentUser.uid
-    const listsQuery = doc(fbDB, `users/${userId}/lists`, payload.list.id)
+    const listsQuery = doc(fbDB, `users/${userId}/lists`, payload.listId)
 
-    let listData = {
-      foodItems: payload.list.foodItems,
+    let listData = {}
+
+    if (payload.foodItems) {
+      listData.foodItems = payload.foodItems
+    } else if (payload.togglePrices !== null) {
+      payload.togglePrices = !payload.togglePrices
+
+      listData.togglePrices = payload.togglePrices
     }
 
     if (payload.canUpdateDate === false) {
@@ -149,6 +159,7 @@ export const ListsContextProvider = ({ children }) => {
             id: nanoid(20),
             name: item.name,
             checked: item.checked,
+            price: 0,
           }),
         },
         { merge: true }
@@ -156,6 +167,11 @@ export const ListsContextProvider = ({ children }) => {
     } catch (e) {
       console.log(e)
     }
+  }
+
+  // TOGGLE LIST PRICES
+  const toggleListPricesHandler = async (payload) => {
+    dispatchListsAction({ type: 'TOGGLE_LIST_PRICES', payload })
   }
 
   // DELETE FOOD ITEM
@@ -179,11 +195,6 @@ export const ListsContextProvider = ({ children }) => {
   // TOGGLE FOOD ITEM CHECKBOX
   const toggleFoodItemCheckboxHandler = async (payload) => {
     dispatchListsAction({ type: 'TOGGLE_FOODITEM_CHECKBOX', payload })
-  }
-
-  //
-  const reorderFoodItemsHandler = async (payload) => {
-    dispatchListsAction({ type: 'REORDER_LIST_ITEMS', payload })
   }
 
   // SET CURRENT LIST
@@ -213,6 +224,8 @@ export const ListsContextProvider = ({ children }) => {
               date: new Date(list.date),
               urlId: list.urlId,
               foodItems: list.foodItems,
+              totalPrice: list.totalPrice,
+              togglePrices: list.togglePrices,
             }
             if (change.type === 'added') {
               console.log('added')
@@ -253,9 +266,9 @@ export const ListsContextProvider = ({ children }) => {
     addList: addListHandler,
     updateList: updateListHandler,
     deleteList: deleteListHandler,
+    toggleListPrices: toggleListPricesHandler,
     addFoodItem: addFoodItemHandler,
     deleteFoodItem: deleteFoodItemHandler,
-    reorderFoodItems: reorderFoodItemsHandler,
     toggleFoodItemCheckbox: toggleFoodItemCheckboxHandler,
     setListsListener: setListsListenerHandler,
     unsubscribeListsListener: state.unsubscribeListsListener,

@@ -3,8 +3,6 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { useState } from 'react'
 
 const FoodItems = ({ currentList, foodItems, listsCtx }) => {
-  const [toggle, setToggle] = useState(false)
-
   const deleteFoodItemHandler = (foodItem, e) => {
     e.preventDefault()
     listsCtx.deleteFoodItem(foodItem)
@@ -14,13 +12,13 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
     let checkbox = foodItems[index]
 
     checkbox.checked = !checkbox.checked
+    //
+    // listsCtx.toggleFoodItemCheckbox({
+    //   list: foodItems,
+    //   listId: currentList.id,
+    // })
 
-    listsCtx.toggleFoodItemCheckbox({
-      list: foodItems,
-      listId: currentList.id,
-    })
-
-    listsCtx.updateList({ list: currentList })
+    listsCtx.updateList({ foodItems, listId: currentList.id })
   }
 
   const handleOnDragEnd = (result) => {
@@ -29,7 +27,7 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
     const [reorderedItem] = foodItems.splice(result.source.index, 1)
     foodItems.splice(result.destination.index, 0, reorderedItem)
 
-    listsCtx.updateList({ list: currentList })
+    listsCtx.updateList({ foodItems, listId: currentList.id })
   }
 
   return (
@@ -82,12 +80,12 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
                           </div>
                           {/*PRICE INPUT*/}
                           <div className='flex items-center'>
-                            {toggle && (
+                            {currentList.togglePrices && (
                               <input
                                 type='text'
                                 placeholder='0'
                                 className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
-             border-0 focus:ring-0 ring-0 rounded h-8 w-14 mr-4'
+             border-0 focus:ring-0 ring-0 rounded h-7 w-14 mr-4'
                               />
                             )}
 
