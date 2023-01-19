@@ -6,35 +6,37 @@ const AddFoodItem = ({ listsCtx }) => {
   const itemNameRef = useRef('')
 
   const addFoodItemHandler = (e) => {
-    if (e.key === 'Enter') {
-      if (itemNameRef.current.value !== '') {
-        const foodItem = {
-          name: itemNameRef.current.value,
-          checked: false,
-        }
-        listsCtx.addFoodItem(foodItem)
-        setItemName('')
+    e.preventDefault()
+    if (itemNameRef.current.value !== '') {
+      const foodItem = {
+        name: itemNameRef.current.value,
+        checked: false,
       }
+      listsCtx.addFoodItem(foodItem)
+      setItemName('')
     }
   }
 
-  const itemNameChangeHandler = (event) => {
-    setItemName(event.target.value)
+  const itemNameChangeHandler = (e) => {
+    e.preventDefault()
+    setItemName(e.target.value)
   }
 
   return (
     <div className='flex items-center'>
-      <input
-        type='text'
-        ref={itemNameRef}
-        value={itemName}
-        onChange={itemNameChangeHandler}
-        onKeyDown={(e) => addFoodItemHandler(e)}
-        // placeholder='Enter item here...'
-        placeholder='Add new item...'
-        className='bg-neutral-900 text-white text-lg placeholder-neutral-600
+      <form action=''>
+        <input
+          type='text'
+          ref={itemNameRef}
+          value={itemName}
+          onChange={itemNameChangeHandler}
+          onKeyDown={(e) => e.key === 'Enter' && addFoodItemHandler(e)}
+          // placeholder='Enter item here...'
+          placeholder='Add new item...'
+          className='bg-neutral-900 text-white text-lg placeholder-neutral-600
              border-0 focus:ring-0 ring-0 rounded w-40'
-      />
+        />
+      </form>
 
       {/*ADD BUTTON*/}
       <button

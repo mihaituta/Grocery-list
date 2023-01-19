@@ -38,16 +38,18 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
   const showItems = (foodItem, index) => {
     return (
       <>
-        <input
-          type='number'
-          placeholder='0'
-          className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
+        <form action=''>
+          <input
+            type='number'
+            placeholder='0'
+            className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
              border-0 focus:ring-0 ring-0 rounded h-7 w-14 mr-4'
-          ref={(el) => (foodItemPriceRefs.current[index] = el)}
-          defaultValue={foodItem.price}
-          onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
-          onBlur={(e) => editFoodItemPriceHandler(index, e)}
-        />
+            ref={(el) => (foodItemPriceRefs.current[index] = el)}
+            defaultValue={foodItem.price}
+            onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+            onBlur={(e) => editFoodItemPriceHandler(index, e)}
+          />
+        </form>
       </>
     )
   }
