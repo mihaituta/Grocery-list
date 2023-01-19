@@ -1,6 +1,6 @@
 import { TrashIcon, Bars3Icon } from '@heroicons/react/24/solid'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 const FoodItems = ({ currentList, foodItems, listsCtx }) => {
   const foodItemPriceRefs = useRef([])
@@ -14,23 +14,16 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
     let checkbox = foodItems[index]
 
     checkbox.checked = !checkbox.checked
-    //
-    // listsCtx.toggleFoodItemCheckbox({
-    //   list: foodItems,
-    //   listId: currentList.id,
-    // })
 
     listsCtx.updateList({ foodItems, listId: currentList.id })
   }
 
-  const editFoodItemPriceHandler = (index, e) => {
+  const editFoodItemPriceHandler = (index) => {
     let item = foodItems[index]
 
-    item.price = Number(foodItemPriceRefs.current[index].value)
+    item.price = foodItemPriceRefs.current[index].value
 
     listsCtx.updateList({ foodItems, listId: currentList.id })
-
-    return
   }
 
   const handleOnDragEnd = (result) => {
@@ -52,7 +45,7 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
              border-0 focus:ring-0 ring-0 rounded h-7 w-14 mr-4'
           ref={(el) => (foodItemPriceRefs.current[index] = el)}
           defaultValue={foodItem.price}
-          onKeyDown={(e) => e.key === 'Enter' && e.target.blur()}
+          onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
           onBlur={(e) => editFoodItemPriceHandler(index, e)}
         />
       </>

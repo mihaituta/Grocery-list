@@ -1,7 +1,8 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../AuthContext'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import CheckedItemsHelper from '../../CheckedItemsHelper'
 
 const Header = ({
   children,
@@ -14,12 +15,23 @@ const Header = ({
 }) => {
   const { user } = UserAuth()
   const navigate = useNavigate()
-  const [val, changeVal] = useState('')
+  const [totalPriceState, setTotalPriceState] = useState('')
+  const totalPriceRef = useRef('')
 
   const togglePrices = () => {
-    // listCtx.toggleListPrices(currentList)
     listsCtx.updateList({
+      updateTogglePrices: true,
       togglePrices: currentList.togglePrices,
+      listId: currentList.id,
+    })
+  }
+
+  const editTotalPrice = () => {
+    currentList.totalPrice = totalPriceRef.current.value
+    listsCtx.updateList({
+      updateTotalPrice: true,
+      canEditTotalPrices: currentList.canEditTotalPrices,
+      totalPrice: currentList.totalPrice,
       listId: currentList.id,
     })
   }
@@ -37,6 +49,7 @@ const Header = ({
         </div>
       )}
 
+      {/*APP NAME*/}
       <div className='flex flex-row items-center justify-between '>
         <h1 className='text-white text-3xl font-semibold py-2'>Grocery list</h1>
         <button
@@ -46,8 +59,11 @@ const Header = ({
           {buttonText}
         </button>
       </div>
+
+      {/*USER MAIL*/}
       <div className='flex items-center justify-between my-4'>
         <p className='text-white text-base mt-2 mb-4'>{user && user.email}</p>
+
         {/*TOTAL PRICE */}
         {listPage && foodItems && foodItems.length > 0 && (
           <div className='flex flex-col items-end'>
@@ -55,12 +71,21 @@ const Header = ({
               Total:
               <input
                 style={{
-                  width: `${Math.min(Math.max(val.length, 2), 10) + 2}ch`,
+                  width: `${
+                    Math.min(Math.max(currentList.totalPrice.length, 2), 10) + 2
+                  }ch`,
                 }}
-                value={val}
+                ref={totalPriceRef}
+                readOnly={
+                  CheckedItemsHelper(foodItems).listCompletedWithAllItemsChecked
+                }
+                value={currentList.totalPrice}
                 onChange={(e) => {
-                  changeVal(e.target.value)
+                  currentList.totalPrice = e.target.value
+                  setTotalPriceState(currentList.totalPrice)
                 }}
+                onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+                onBlur={(e) => editTotalPrice(e)}
                 type='number'
                 placeholder='0'
                 className='disabled:cursor-not-allowed appearance-none text-center bg-neutral-900 text-zinc-300 text-lg placeholder-neutral-600
@@ -68,6 +93,7 @@ const Header = ({
               />
               lei
             </div>
+
             {/*TOGGLE PRICES*/}
             <div className='flex items-center ml-4 mt-2'>
               <input

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useReducer, useRef } from 'react'
 import { nanoid } from 'nanoid'
 import {
   fbAuth,
@@ -21,6 +21,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 const initState = {
   lists: [],
   currentList: {},
+  ref: null,
   setCurrentList: (payload) => {},
   addList: (list) => {},
   getLists: () => {},
@@ -94,7 +95,7 @@ export const ListsContextProvider = ({ children }) => {
         urlId: nanoid(10),
         foodItems: [],
         canUpdateDate: true,
-        totalPrice: 0,
+        totalPrice: '',
         togglePrices: false,
       })
     } catch (error) {
@@ -112,11 +113,18 @@ export const ListsContextProvider = ({ children }) => {
 
     if (payload.foodItems) {
       listData.foodItems = payload.foodItems
-    } else if (payload.togglePrices !== null) {
-      payload.togglePrices = !payload.togglePrices
+    }
 
+    if (payload.updateTogglePrices) {
+      payload.togglePrices = !payload.togglePrices
       listData.togglePrices = payload.togglePrices
     }
+
+    if (payload.updateTotalPrice) {
+      listData.totalPrice = payload.totalPrice
+    }
+
+    // console.log(listData)
 
     if (payload.canUpdateDate === false) {
       listData = {
@@ -159,7 +167,7 @@ export const ListsContextProvider = ({ children }) => {
             id: nanoid(20),
             name: item.name,
             checked: item.checked,
-            price: 0,
+            price: '',
           }),
         },
         { merge: true }
@@ -205,6 +213,7 @@ export const ListsContextProvider = ({ children }) => {
   // SET LISTENER
   const setListsListenerHandler = () => {
     const userId = fbAuth.currentUser.uid
+    console.log(userId)
     const listsQuery = query(
       collection(fbDB, `users/${userId}/lists`),
       orderBy('date', 'desc')
