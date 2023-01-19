@@ -21,7 +21,12 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
   const editFoodItemPriceHandler = (index) => {
     let item = foodItems[index]
 
-    item.price = foodItemPriceRefs.current[index].value
+    if (foodItemPriceRefs.current[index].value === '0') {
+      item.price = ''
+      foodItemPriceRefs.current[index].value = ''
+    } else {
+      item.price = foodItemPriceRefs.current[index].value
+    }
 
     listsCtx.updateList({ foodItems, listId: currentList.id })
   }
@@ -43,7 +48,7 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
             type='number'
             placeholder='0'
             className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
-             border-0 focus:ring-0 ring-0 rounded h-7 w-14 mr-4'
+             border-0 focus:ring-0 ring-0 rounded h-7 w-16 mr-4'
             ref={(el) => (foodItemPriceRefs.current[index] = el)}
             defaultValue={foodItem.price}
             onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}

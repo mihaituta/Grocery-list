@@ -27,7 +27,13 @@ const Header = ({
   }
 
   const editTotalPrice = () => {
-    currentList.totalPrice = totalPriceRef.current.value
+    if (totalPriceRef.current.value === '0') {
+      currentList.totalPrice = ''
+      totalPriceRef.current.value = ''
+    } else {
+      currentList.totalPrice = totalPriceRef.current.value
+    }
+
     listsCtx.updateList({
       updateTotalPrice: true,
       canEditTotalPrices: currentList.canEditTotalPrices,
