@@ -6,15 +6,15 @@ const AddFoodItem = ({ listsCtx }) => {
   const itemNameRef = useRef('')
 
   const addFoodItemHandler = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (itemNameRef.current.value !== '') {
-      const foodItem = {
-        name: itemNameRef.current.value,
-        checked: false,
+    if (e.key === 'Enter') {
+      if (itemNameRef.current.value !== '') {
+        const foodItem = {
+          name: itemNameRef.current.value,
+          checked: false,
+        }
+        listsCtx.addFoodItem(foodItem)
+        setItemName('')
       }
-      listsCtx.addFoodItem(foodItem)
-      setItemName('')
     }
   }
 
@@ -29,7 +29,7 @@ const AddFoodItem = ({ listsCtx }) => {
         ref={itemNameRef}
         value={itemName}
         onChange={itemNameChangeHandler}
-        onKeyDown={(e) => e.key === 'Enter' && addFoodItemHandler(e)}
+        onKeyDown={(e) => addFoodItemHandler(e)}
         // placeholder='Enter item here...'
         placeholder='Add new item...'
         className='bg-neutral-900 text-white text-lg placeholder-neutral-600
