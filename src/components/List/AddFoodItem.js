@@ -5,7 +5,9 @@ const AddFoodItem = ({ listsCtx }) => {
   const [itemName, setItemName] = useState('')
   const itemNameRef = useRef('')
 
-  const addFoodItemHandler = () => {
+  const addFoodItemHandler = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     if (itemNameRef.current.value !== '') {
       const foodItem = {
         name: itemNameRef.current.value,

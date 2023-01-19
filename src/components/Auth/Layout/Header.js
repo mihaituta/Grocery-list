@@ -1,7 +1,7 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../AuthContext'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import CheckedItemsHelper from '../../CheckedItemsHelper'
 
 const Header = ({
