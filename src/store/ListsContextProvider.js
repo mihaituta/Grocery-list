@@ -213,7 +213,6 @@ export const ListsContextProvider = ({ children }) => {
   // SET LISTENER
   const setListsListenerHandler = () => {
     const userId = fbAuth.currentUser.uid
-    console.log(userId)
     const listsQuery = query(
       collection(fbDB, `users/${userId}/lists`),
       orderBy('date', 'desc')

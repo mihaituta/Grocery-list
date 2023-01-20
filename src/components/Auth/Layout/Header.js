@@ -31,7 +31,13 @@ const Header = ({
       currentList.totalPrice = ''
       totalPriceRef.current.value = ''
     } else {
-      currentList.totalPrice = totalPriceRef.current.value
+      //prettier-ignore
+      currentList.totalPrice = String(parseFloat(
+          (Number(totalPriceRef.current.value)).toFixed(2))
+      )
+      totalPriceRef.current.value = String(
+        parseFloat(Number(totalPriceRef.current.value).toFixed(2))
+      )
     }
 
     listsCtx.updateList({
@@ -111,7 +117,7 @@ const Header = ({
                 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
               />
               <label className='text-white ml-2 text-lg' htmlFor='pricesInput'>
-                Empty prices
+                Prices
               </label>
             </div>
           </div>

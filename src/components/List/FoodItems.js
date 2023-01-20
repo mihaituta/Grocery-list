@@ -1,9 +1,10 @@
 import { TrashIcon, Bars3Icon } from '@heroicons/react/24/solid'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const FoodItems = ({ currentList, foodItems, listsCtx }) => {
   const foodItemPriceRefs = useRef([])
+  const [priceState, setPriceState] = useState('')
 
   const deleteFoodItemHandler = (foodItem, e) => {
     e.preventDefault()
@@ -40,20 +41,44 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
     listsCtx.updateList({ foodItems, listId: currentList.id })
   }
 
+  const updatePriceState = (e, index) => {
+    const updatedState = [...priceState]
+    updatedState[index] = e.target.value
+    setPriceState(updatedState)
+  }
+
   const showItems = (foodItem, index) => {
     return (
       <>
         <form action=''>
           <input
+            style={{
+              width: `${Math.min(Math.max(foodItem.price.length, 2), 5) + 2}ch`,
+            }}
             type='number'
             placeholder='0'
             className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
-             border-0 focus:ring-0 ring-0 rounded h-7 w-16 mr-4'
+             border-0 focus:ring-0 ring-0 rounded h-7 p-0 mr-4'
             ref={(el) => (foodItemPriceRefs.current[index] = el)}
-            defaultValue={foodItem.price}
+            value={foodItem.price}
+            onChange={(e) => {
+              foodItem.price = e.target.value
+              setPriceState(foodItem.price)
+            }}
             onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
             onBlur={(e) => editFoodItemPriceHandler(index, e)}
           />
+
+          {/*<input
+              type='number'
+              placeholder='0'
+              className='text-center bg-neutral-900 text-zinc-500 text-lg placeholder-neutral-600
+             border-0 focus:ring-0 ring-0 rounded h-7 w-16 mr-4'
+              ref={(el) => (foodItemPriceRefs.current[index] = el)}
+              defaultValue={foodItem.price}
+              onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+              onBlur={(e) => editFoodItemPriceHandler(index, e)}
+          />*/}
         </form>
       </>
     )
