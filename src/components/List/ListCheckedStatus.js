@@ -12,19 +12,24 @@ const ListCheckedStatus = ({ foodItems, currentList, listsCtx }) => {
   //if all the items are checked and have prices, calculate the total price
   if (listCompletedWithAllItemsChecked) {
     //prettier-ignore
+    const totalPrice = foodItems.reduce((total, foodItem) => total + Number(foodItem.price), 0)
 
-    const totalPrice = foodItems.reduce(
-      (total, foodItem) => total + Number(foodItem.price),
-      0
-    )
-
-    currentList.totalPrice = String(totalPrice > 0 ? totalPrice : '')
     listsCtx.updateList({
       updateTotalPrice: true,
-      totalPrice: currentList.totalPrice,
+      totalPrice: String(parseFloat(totalPrice.toFixed(2))),
       listId: currentList.id,
     })
   }
+
+  // reset totalPrice to empty when all the items have been deleted
+  if (currentList.foodItems && currentList.foodItems.length === 0) {
+    listsCtx.updateList({
+      updateTotalPrice: true,
+      totalPrice: '',
+      listId: currentList.id,
+    })
+  }
+
   // prettier-ignore
   // if list is completed, set canUpdateDate to false so the date will never be updated again
   if (isListCompleted && foodItems.length > 0 && currentList.canUpdateDate === true) {

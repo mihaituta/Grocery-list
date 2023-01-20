@@ -51,27 +51,6 @@ export default function AppReducer(state, action) {
         lists: state.lists.filter((list) => list.id !== action.payload),
       }
 
-    case 'TOGGLE_FOODITEM_CHECKBOX': {
-      const list = state.lists.find((list) => list.id === action.payload.listId)
-
-      // updating the list's food items with the updated checked items
-      list.foodItems = action.payload.list
-
-      return {
-        ...state,
-      }
-    }
-
-    case 'TOGGLE_LIST_PRICES': {
-      const list = state.lists.find((list) => list.id === action.payload.id)
-      // updating the list's food items with the updated checked items
-      list.togglePrices = action.payload.togglePrices
-
-      return {
-        ...state,
-      }
-    }
-
     case 'UPDATE_DATE': {
       const list = state.lists.find((list) => list.id === action.payload.listId)
       list.canUpdateDate = false

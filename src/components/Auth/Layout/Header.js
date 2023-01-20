@@ -26,18 +26,14 @@ const Header = ({
     })
   }
 
+  //prettier-ignore
   const editTotalPrice = () => {
-    if (totalPriceRef.current.value === '0') {
+    if (totalPriceRef.current.value === '') {
       currentList.totalPrice = ''
-      totalPriceRef.current.value = ''
+      // totalPriceRef.current.value = ''
     } else {
-      //prettier-ignore
-      currentList.totalPrice = String(parseFloat(
-          (Number(totalPriceRef.current.value)).toFixed(2))
-      )
-      totalPriceRef.current.value = String(
-        parseFloat(Number(totalPriceRef.current.value).toFixed(2))
-      )
+      currentList.totalPrice = String(parseFloat((Number(totalPriceRef.current.value)).toFixed(2)))
+      // totalPriceRef.current.value = String(parseFloat(Number(totalPriceRef.current.value).toFixed(2)))
     }
 
     listsCtx.updateList({
@@ -81,20 +77,19 @@ const Header = ({
           <div className='flex flex-col items-end'>
             <div className='text-white text-xl mb-1'>
               Total:
+              {/*prettier-ignore*/}
               <input
-                style={{
-                  width: `${
-                    Math.min(Math.max(currentList.totalPrice.length, 2), 10) + 2
-                  }ch`,
-                }}
+                style={{width: `${Math.min(Math.max(currentList.totalPrice.length, 2), 10) + 2}ch`}}
                 ref={totalPriceRef}
-                readOnly={
-                  CheckedItemsHelper(foodItems).listCompletedWithAllItemsChecked
-                }
+                readOnly={CheckedItemsHelper(foodItems).listCompletedWithAllItemsChecked}
                 value={currentList.totalPrice}
                 onChange={(e) => {
-                  currentList.totalPrice = e.target.value
-                  setTotalPriceState(currentList.totalPrice)
+                  // only allow empty or number with 6 digits and 1 or 2 decimals
+                  const re = /^(\s*|[1-9]\d{0,5})(\.\d{0,2})?$/
+                  if (re.test(e.target.value)) {
+                    currentList.totalPrice = e.target.value
+                    setTotalPriceState(currentList.totalPrice)
+                  }
                 }}
                 onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
                 onBlur={(e) => editTotalPrice(e)}

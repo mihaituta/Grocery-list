@@ -19,11 +19,6 @@ const Home = () => {
     }
   }
 
-  // const show = () => {
-  //   console.log(listsCtx.lists)
-  //   console.log(listsCtx.currentList)
-  // }
-
   return (
     <>
       <Header buttonText='Logout' buttonFunction={handleLogout}>

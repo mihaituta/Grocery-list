@@ -20,14 +20,6 @@ const List = () => {
     navigate('/')
   }
 
-  /*  const show = (e) => {
-    e.preventDefault()
-
-    console.log('lists', listsCtx.lists)
-    console.log('current list', listsCtx.currentList)
-    console.log('food items', listsCtx.currentList.foodItems)
-  }*/
-
   useEffect(() => {
     return () => {
       // clear the current list when leaving the list page

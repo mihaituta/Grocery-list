@@ -27,7 +27,6 @@ const initState = {
   getLists: () => {},
   deleteList: (id) => {},
   addFoodItem: (foodItem) => {},
-  // ? editFoodItem: (item) => {},
   deleteFoodItem: (foodItem) => {},
   toggleFoodItemCheckbox: (payload) => {},
   toggleListPrices: (payload) => {},
@@ -200,11 +199,6 @@ export const ListsContextProvider = ({ children }) => {
     }
   }
 
-  // TOGGLE FOOD ITEM CHECKBOX
-  const toggleFoodItemCheckboxHandler = async (payload) => {
-    dispatchListsAction({ type: 'TOGGLE_FOODITEM_CHECKBOX', payload })
-  }
-
   // SET CURRENT LIST
   const setCurrentListHandler = (payload) => {
     dispatchListsAction({ type: 'SET_CURRENT_LIST', payload })
@@ -274,10 +268,8 @@ export const ListsContextProvider = ({ children }) => {
     addList: addListHandler,
     updateList: updateListHandler,
     deleteList: deleteListHandler,
-    toggleListPrices: toggleListPricesHandler,
     addFoodItem: addFoodItemHandler,
     deleteFoodItem: deleteFoodItemHandler,
-    toggleFoodItemCheckbox: toggleFoodItemCheckboxHandler,
     setListsListener: setListsListenerHandler,
     unsubscribeListsListener: state.unsubscribeListsListener,
     clearData: clearDataHandler,
