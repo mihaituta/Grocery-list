@@ -24,7 +24,7 @@ const Home = () => {
       <Header buttonText='Logout' buttonFunction={handleLogout}>
         {/*Add list*/}
         <button
-          className='border px-4 h-10 text-xl text-amber-300 border-amber-300'
+          className='border px-4 h-10 mt-1 text-xl text-amber-300 border-amber-300'
           onClick={listsCtx.addList}
         >
           Add list
