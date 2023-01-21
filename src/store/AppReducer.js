@@ -1,5 +1,11 @@
 export default function AppReducer(state, action) {
   switch (action.type) {
+    case 'SET_SAVEDFOODS':
+      return {
+        ...state,
+        savedFoods: action.payload,
+      }
+
     case 'GET_LISTS':
       return {
         ...state,
@@ -64,6 +70,12 @@ export default function AppReducer(state, action) {
       return {
         ...state,
         unsubscribeListsListener: action.payload,
+      }
+
+    case 'UNSUBSCRIBE_USER_LISTENER':
+      return {
+        ...state,
+        unsubscribeUserListener: action.payload,
       }
 
     case 'CLEAR_DATA':

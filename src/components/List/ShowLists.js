@@ -20,8 +20,7 @@ const ShowLists = ({ listsCtx }) => {
             : date.getDate()*/
 
     // prettier-ignore
-    return `${'(' + days[date.getDay()] + ') ' + date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear().toString().slice(2)
-        }`
+    return `${'(' + days[date.getDay()] + ') ' + date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear().toString().slice(2)}`
   }
 
   return (
@@ -51,11 +50,8 @@ const ShowLists = ({ listsCtx }) => {
               ))}
             </ul>
             <div className='text-amber-300 text-s absolute right-3 bottom-2'>
-              {/*right-2 bottom-1*/}
               {formattedDate(list.date)}
             </div>
-
-            {/*<button onClick={() => listsCtx.deleteList(list.id)}>Delete</button>*/}
           </div>
         ))}
     </div>

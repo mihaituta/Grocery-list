@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useRef } from 'react'
+import React, { createContext, useReducer } from 'react'
 import { nanoid } from 'nanoid'
 import {
   fbAuth,
@@ -14,24 +14,30 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  setDoc,
 } from './firebase'
 import appReducer from './AppReducer'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { getDoc } from 'firebase/firestore'
 
 const initState = {
   lists: [],
   currentList: {},
-  ref: null,
+  savedFoods: [],
+  getUser: () => {},
   setCurrentList: (payload) => {},
   addList: (list) => {},
   getLists: () => {},
   deleteList: (id) => {},
   addFoodItem: (foodItem) => {},
+  addSavedFood: (foodItemName) => {},
   deleteFoodItem: (foodItem) => {},
   toggleFoodItemCheckbox: (payload) => {},
   toggleListPrices: (payload) => {},
+  setUserListener: null,
   setListsListener: null,
   unsubscribeListsListener: () => {},
+  unsubscribeUserListener: () => {},
 }
 
 export const ListsContext = createContext(initState)
@@ -40,6 +46,64 @@ export const ListsContextProvider = ({ children }) => {
   const [state, dispatchListsAction] = useReducer(appReducer, initState)
   const currentUrl = useLocation()
   const navigate = useNavigate()
+
+  // GET USER
+  const getUserHandler = async () => {
+    const userId = fbAuth.currentUser.uid
+    const userDoc = await getDoc(doc(fbDB, `users/${userId}`))
+
+    if (userDoc.exists()) {
+      dispatchListsAction({
+        type: 'SET_SAVEDFOODS',
+        payload: userDoc.data().savedFoods,
+      })
+    }
+  }
+
+  // USER LISTENER
+
+  const setUserListenerHandler = async () => {
+    const userId = fbAuth.currentUser.uid
+
+    // let initState = true
+
+    const unsubscribeListener = onSnapshot(
+      doc(fbDB, `users/${userId}`),
+      (snapshot) => {
+        /*    if (initState) {
+          initState = false
+        } else {*/
+        dispatchListsAction({
+          type: 'SET_SAVEDFOODS',
+          payload: snapshot.data().savedFoods,
+        })
+
+        // }
+      }
+    )
+
+    dispatchListsAction({
+      type: 'UNSUBSCRIBE_USER_LISTENER',
+      payload: unsubscribeListener,
+    })
+  }
+
+  // ADD SAVED FOOD
+  const addSavedFoodHandler = async (savedFood) => {
+    const userId = fbAuth.currentUser.uid
+    try {
+      await setDoc(
+        doc(fbDB, 'users', userId),
+        {
+          savedFoods: arrayUnion(savedFood),
+        },
+        { merge: true }
+      )
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
 
   // GET LISTS
   const getListsHandler = async () => {
@@ -69,7 +133,10 @@ export const ListsContextProvider = ({ children }) => {
         updatedLists.push(temp)
       })
 
-      dispatchListsAction({ type: 'GET_LISTS', payload: updatedLists })
+      state.savedFoods = dispatchListsAction({
+        type: 'GET_LISTS',
+        payload: updatedLists,
+      })
       // when the current page URL contains 'list' meaning its on a list's page, set the current list state by its urlId
       if (currentUrl.pathname.includes('list')) {
         const urlId = currentUrl.pathname.substring(6)
@@ -261,17 +328,27 @@ export const ListsContextProvider = ({ children }) => {
 
   const listsContext = {
     lists: state.lists,
-    togglePrices: state.togglePrices,
     currentList: state.currentList,
+
+    savedFoods: state.savedFoods,
+    addSavedFood: addSavedFoodHandler,
+    getUser: getUserHandler,
+    setUserListener: setUserListenerHandler,
+
     setCurrentList: setCurrentListHandler,
+    togglePrices: state.togglePrices,
+
     getLists: getListsHandler,
     addList: addListHandler,
     updateList: updateListHandler,
     deleteList: deleteListHandler,
+    setListsListener: setListsListenerHandler,
+
     addFoodItem: addFoodItemHandler,
     deleteFoodItem: deleteFoodItemHandler,
-    setListsListener: setListsListenerHandler,
+
     unsubscribeListsListener: state.unsubscribeListsListener,
+    unsubscribeUserListener: state.unsubscribeUserListener,
     clearData: clearDataHandler,
   }
 

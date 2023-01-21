@@ -50,7 +50,9 @@ export const AuthContextProvider = ({ children }) => {
       setUser(currentUser)
       if (currentUser) {
         try {
+          // listsCtx.getUser()
           listsCtx.setListsListener()
+          listsCtx.setUserListener()
           listsCtx.getLists()
         } catch (e) {
           console.log(e)

@@ -68,8 +68,8 @@ const Header = ({
         </button>
       </div>
 
-      {/*USER MAIL*/}
       <div className='flex items-center justify-between my-4'>
+        {/*USER MAIL*/}
         <p className='text-white text-base mt-2 mb-4'>{user && user.email}</p>
 
         {/*TOTAL PRICE */}

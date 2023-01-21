@@ -4,7 +4,6 @@ import { ListsContext } from '../../store/ListsContextProvider'
 
 import FoodItems from '../List/FoodItems'
 import ProgressBar from '../List/ProgressBar'
-import ListCheckedStatus from '../List/ListCheckedStatus'
 import AddFoodItem from '../List/AddFoodItem'
 import Header from '../Auth/Layout/Header'
 
@@ -43,22 +42,14 @@ const List = () => {
         currentList={currentList}
         listsCtx={listsCtx}
       >
-        <div className='flex items-center justify-between'>
-          {/*INPUT ADD ITEM*/}
-          <AddFoodItem listsCtx={listsCtx} />
+        {/*INPUT ADD ITEM*/}
+        <AddFoodItem
+          listPage={true}
+          listsCtx={listsCtx}
+          foodItems={foodItems}
+          currentList={currentList}
+        />
 
-          <ListCheckedStatus
-            foodItems={foodItems}
-            currentList={currentList}
-            listsCtx={listsCtx}
-          />
-        </div>
-        {/*<button
-          className='text-white border px-6 py-2  m-4'
-          onClick={show}
-        >
-          Show Current List
-        </button>*/}
         <ProgressBar foodItems={foodItems} />
       </Header>
 

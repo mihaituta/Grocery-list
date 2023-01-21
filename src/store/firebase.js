@@ -15,6 +15,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  getDoc,
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -49,4 +50,5 @@ export {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  getDoc,
 }

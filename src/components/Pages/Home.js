@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../Auth/AuthContext'
 import { ListsContext } from '../../store/ListsContextProvider'
-import ShowLists from '../ShowLists'
+import ShowLists from '../List/ShowLists'
 import Header from '../Auth/Layout/Header'
 
 const Home = () => {
