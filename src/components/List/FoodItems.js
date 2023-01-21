@@ -102,13 +102,13 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
                               onChange={() => foodItemCheckHandler(index)}
                               id={`checkbox-${index}`}
                               name={foodItem.name}
-                              className='w-6 h-6 text-amber-300 bg-zinc-800
-                focus:ring-offset-0 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
+                              className='w-6 h-6 text-amber-300 bg-zinc-800 focus:ring-offset-0
+                              border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
                             />
 
                             {/*ITEM NAME*/}
                             <label
-                              className='ml-3 mr-3 text-xl text-white flex items-center break-all cursor-pointer'
+                              className='ml-3 mr-3 text-xl text-white flex break-words items-center cursor-pointer'
                               htmlFor={`checkbox-${index}`}
                             >
                               {foodItem.name}

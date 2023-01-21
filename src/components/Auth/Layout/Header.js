@@ -59,10 +59,11 @@ const Header = ({
 
       {/*APP NAME*/}
       <div className='flex flex-row items-center justify-between '>
-        <h1 className='text-white text-3xl font-semibold py-2'>Grocery list</h1>
+        <h1 className='text-white text-2xl font-semibold py-2'>Grocery list</h1>
+        {/*BUTTON PROPS*/}
         <button
           onClick={buttonFunction}
-          className='border px-6 h-11 text-lg text-amber-300 border-amber-300'
+          className='border px-3 h-10 text-lg text-amber-300 border-amber-300'
         >
           {buttonText}
         </button>
@@ -70,7 +71,9 @@ const Header = ({
 
       <div className='flex items-center justify-between my-4'>
         {/*USER MAIL*/}
-        <p className='text-white text-base mt-2 mb-4'>{user && user.email}</p>
+        <p className='text-white text-base mt-2 mb-4'>
+          {user.email && user.email.split('@')[0]}
+        </p>
 
         {/*TOTAL PRICE */}
         {listPage && foodItems && foodItems.length > 0 && (

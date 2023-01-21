@@ -68,6 +68,8 @@ const AddFoodItem = ({ listsCtx, listPage, foodItems, currentList }) => {
             ))}
         </div>
       )}
+
+      {/*ADD ITEM*/}
       <div className='flex items-center justify-between'>
         <div className='flex items-center'>
           <form action=''>
