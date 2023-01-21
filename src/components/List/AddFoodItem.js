@@ -27,9 +27,9 @@ const AddFoodItem = ({ listsCtx, listPage, foodItems, currentList }) => {
     //prettier-ignore
     setFilteredFoods(listsCtx.savedFoods &&
         listsCtx.savedFoods.filter((food) => {
-          const isMultipleWords = food.includes(' ')
+          const stringHasMultipleWords = food.includes(' ')
 
-          if (isMultipleWords) {
+          if (stringHasMultipleWords) {
             const splitWord = food.split(' ')
 
             // returns true if one of the words in the string starts with the typed input
@@ -37,9 +37,7 @@ const AddFoodItem = ({ listsCtx, listPage, foodItems, currentList }) => {
                 .startsWith(itemNameRef.current.value.toLowerCase())).length > 0)
           }
 
-          return food
-              .toLowerCase()
-              .startsWith(itemNameRef.current.value.toLowerCase())
+          return food.toLowerCase().startsWith(itemNameRef.current.value.toLowerCase())
         }))
   }
 
@@ -47,20 +45,24 @@ const AddFoodItem = ({ listsCtx, listPage, foodItems, currentList }) => {
     <div>
       {/*CHIPS RECOMMENDATIONS*/}
       {listPage && itemNameRef.current.value && (
-        <div className='flex flex-wrap mb-1 gap-0'>
-          {filteredFoods.slice(0, 5).map((foodName) => (
-            <div className='flex flex-wrap mr-3 mb-3' key={foodName}>
-              <span
-                className='pl-3 pr-1.5 py-1.5 rounded-md text-zinc-900 bg-amber-300
-          font-semibold flex items-center cursor-pointer
-           active:bg-amber-200 transition duration-300 ease'
-                onClick={(e) => addFoodItemHandler(e, foodName)}
+        <div className='flex flex-wrap gap-0 transition duration-300 ease-out'>
+          {filteredFoods &&
+            filteredFoods.slice(0, 5).map((foodName) => (
+              <div
+                className='flex flex-wrap mr-3 mb-4  transition duration-300 ease-out'
+                key={foodName}
               >
-                {foodName}
-                <PlusIcon className='w-5 h-5 ml-2 text-zinc-900' />
-              </span>
-            </div>
-          ))}
+                <span
+                  className='pl-3 pr-1.5 py-1.5 rounded-md text-zinc-900 bg-amber-300
+          font-semibold flex items-center cursor-pointer
+           active:bg-amber-200 transition duration-300 ease-out'
+                  onClick={(e) => addFoodItemHandler(e, foodName)}
+                >
+                  {foodName}
+                  <PlusIcon className='w-5 h-5 ml-2 text-zinc-900' />
+                </span>
+              </div>
+            ))}
         </div>
       )}
       <div className='flex items-center justify-between'>

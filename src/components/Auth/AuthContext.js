@@ -41,6 +41,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = async () => {
     listsCtx.unsubscribeListsListener()
+    listsCtx.unsubscribeUserListener()
     listsCtx.clearData()
     return await signOut(fbAuth)
   }
@@ -50,8 +51,8 @@ export const AuthContextProvider = ({ children }) => {
       setUser(currentUser)
       if (currentUser) {
         try {
-          listsCtx.setListsListener()
           listsCtx.setUserListener()
+          listsCtx.setListsListener()
           listsCtx.getLists()
         } catch (e) {
           console.log(e)

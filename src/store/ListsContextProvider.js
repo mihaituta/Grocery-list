@@ -24,7 +24,6 @@ const initState = {
   lists: [],
   currentList: {},
   savedFoods: [],
-  getUser: () => {},
   setCurrentList: (payload) => {},
   addList: (list) => {},
   getLists: () => {},
@@ -68,7 +67,7 @@ export const ListsContextProvider = ({ children }) => {
     // let initState = true
 
     const unsubscribeListener = onSnapshot(
-      doc(fbDB, `users/${userId}`),
+      doc(fbDB, `users/${userId}/`),
       (snapshot) => {
         /*    if (initState) {
           initState = false
@@ -332,7 +331,6 @@ export const ListsContextProvider = ({ children }) => {
 
     savedFoods: state.savedFoods,
     addSavedFood: addSavedFoodHandler,
-    getUser: getUserHandler,
     setUserListener: setUserListenerHandler,
 
     setCurrentList: setCurrentListHandler,
