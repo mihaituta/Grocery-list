@@ -15,7 +15,9 @@ const AddFoodItem = ({ listsCtx, listPage, foodItems, currentList }) => {
         checked: false,
       }
       listsCtx.addFoodItem(foodItem)
-      listsCtx.addSavedFood(itemNameRef.current.value)
+
+      // if item is already added in savedFoods don't add it again
+      if (!foodName) listsCtx.addSavedFood(itemNameRef.current.value)
       setItemName('')
     }
   }
@@ -25,20 +27,21 @@ const AddFoodItem = ({ listsCtx, listPage, foodItems, currentList }) => {
     setItemName(e.target.value)
 
     //prettier-ignore
-    setFilteredFoods(listsCtx.savedFoods &&
-        listsCtx.savedFoods.filter((food) => {
-          const stringHasMultipleWords = food.includes(' ')
+    setFilteredFoods(
+      listsCtx.savedFoods &&
+        listsCtx.savedFoods.filter((food) => {const stringHasMultipleWords = food.includes(' ')
 
           if (stringHasMultipleWords) {
             const splitWord = food.split(' ')
 
             // returns true if one of the words in the string starts with the typed input
             return (splitWord.filter((splitWord) => splitWord.toLowerCase()
-                .startsWith(itemNameRef.current.value.toLowerCase())).length > 0)
+                  .startsWith(itemNameRef.current.value.toLowerCase())).length > 0)
           }
 
           return food.toLowerCase().startsWith(itemNameRef.current.value.toLowerCase())
-        }))
+        })
+    )
   }
 
   return (
