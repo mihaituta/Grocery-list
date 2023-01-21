@@ -8,7 +8,7 @@ const AddFoodItem = ({ listsCtx, listPage, foodItems, currentList }) => {
   const itemNameRef = useRef('')
 
   const addFoodItemHandler = (e, foodName) => {
-    console.log(foodName)
+    e.preventDefault()
     if (itemNameRef.current.value !== '') {
       const foodItem = {
         name: foodName ? foodName : itemNameRef.current.value,
