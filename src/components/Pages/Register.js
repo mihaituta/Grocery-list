@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../Auth/AuthContext'
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/20/solid'
 
 const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPass, setShowPass] = useState(false)
+
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const { createUser } = UserAuth()
@@ -38,21 +41,39 @@ const Register = () => {
             type='email'
           />
         </div>
-        <div className='flex flex-col py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label className='py-2 dark:text-white font-medium'>Password</label>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            className='border-0 text-white bg-zinc-700 p-3 '
-            type='password'
-          />
+          <div className='relative'>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              className='border-0 text-white bg-zinc-700 p-3 w-full'
+              type={!showPass ? 'password' : 'text'}
+            />
+            <button
+              type='button'
+              onClick={() => {
+                setShowPass(!showPass)
+              }}
+              className='absolute inset-y-0 right-3'
+            >
+              {!showPass ? (
+                <EyeIcon className='h-6 w-6' />
+              ) : (
+                <EyeSlashIcon className='h-6 w-6' />
+              )}
+            </button>
+          </div>
         </div>
-        <p className='py-2 dark:text-white'>
+        <p className='py-2 text-white'>
           Already have an account?{' '}
           <Link to='/login' className='underline'>
-            Login.
+            Login
           </Link>
         </p>
-        <button className='border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white'>
+        <button
+          type='submit'
+          className='border border-blue-500 bg-blue-600 hover:bg-blue-500 w-full p-4 my-2 text-white'
+        >
           Register
         </button>
       </form>
