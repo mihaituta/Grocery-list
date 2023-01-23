@@ -52,8 +52,8 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
             value={foodItem.price}
             onChange={(e) => {
               // only allow empty or number with 6 digits and 1 or 2 decimals
-              const re = /^(\s*|[1-9]\d{0,4})(\.\d{0,2})?$/
-              if (re.test(e.target.value)) {
+              const regex = /^(\s*|[1-9]\d{0,4})(\.\d{0,2})?$/
+              if (regex.test(e.target.value)) {
                 foodItem.price = e.target.value
                 setPriceState(foodItem.price)
               }

@@ -14,11 +14,6 @@ const ShowLists = ({ listsCtx }) => {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-    /*    const addZeroBeforeSingleDIgitDay =
-          date.getDate().toString().length === 1
-            ? '0' + date.getDate()
-            : date.getDate()*/
-
     // prettier-ignore
     return `${'(' + days[date.getDay()] + ') ' + date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear().toString().slice(2)}`
   }
