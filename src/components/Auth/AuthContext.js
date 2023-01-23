@@ -15,8 +15,8 @@ export const AuthContextProvider = ({ children }) => {
   const listsCtx = useContext(ListsContext)
 
   const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(fbAuth, email, password)
-      .then((res) => {
+    return createUserWithEmailAndPassword(fbAuth, email, password).then(
+      (res) => {
         if (res) {
           const userId = fbAuth.currentUser.uid
           try {
@@ -27,12 +27,8 @@ export const AuthContextProvider = ({ children }) => {
             console.error('Error creating account: ', err)
           }
         }
-      })
-      .catch((error) => {
-        if (error.code === 'Auth/email-already-in-use') {
-          console.log('Email already in use')
-        }
-      })
+      }
+    )
   }
 
   const login = (email, password) => {
