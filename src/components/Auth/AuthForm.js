@@ -40,6 +40,7 @@ const AuthForm = ({
               required={true}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder='Email'
               className='border-0 focus:ring-amber-300 text-white text-lg bg-zinc-700 p-3 w-full pl-12'
               type='email'
             />
@@ -58,6 +59,7 @@ const AuthForm = ({
               required={true}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder='Password'
               className='border-0 focus:ring-amber-300 bg-zinc-700 p-3 text-white text-lg w-full pl-12'
               type={!showPass ? 'password' : 'text'}
             />
@@ -101,7 +103,7 @@ const AuthForm = ({
         {/*SUBMIT BUTTON*/}
         <button
           type='submit'
-          className='border-0 bg-yellow-400/80 hover:bg-yellow-300/80 w-full p-4 my-5 text-white text-xl font-bold'
+          className='border-0 bg-yellow-400/90 hover:bg-yellow-400 w-full p-4 my-5 text-white text-xl font-bold'
         >
           {loginForm ? 'Login' : 'Register'}
         </button>

@@ -4,8 +4,8 @@ import { UserAuth } from '../Auth/AuthContext'
 import AuthForm from '../Auth/AuthForm'
 
 const Login = () => {
-  const [email, setEmail] = useState('demo@gmail.com')
-  const [password, setPassword] = useState('123123')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
   const navigate = useNavigate()
