@@ -20,6 +20,7 @@ const AuthForm = ({
 
   return (
     <div className='max-w-[700px] min-h-screen bg-zinc-800 mx-auto p-4'>
+      {/*APP TITLE*/}
       <h1 className='text-4xl text-white font-bold my-10 text-center'>
         Grocery List
       </h1>
@@ -73,7 +74,7 @@ const AuthForm = ({
               }}
               className='absolute inset-y-0 right-3'
             >
-              {!showPass ? (
+              {showPass ? (
                 <EyeIcon className='text-amber-300 h-6 w-6' />
               ) : (
                 <EyeSlashIcon className='text-amber-300 h-6 w-6' />

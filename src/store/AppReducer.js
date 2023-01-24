@@ -66,7 +66,7 @@ export default function AppReducer(state, action) {
       }
     }
 
-    case 'UNSUBSCRIBE_LISTENER':
+    case 'UNSUBSCRIBE_LIST_LISTENER':
       return {
         ...state,
         unsubscribeListsListener: action.payload,

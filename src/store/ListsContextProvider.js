@@ -18,7 +18,6 @@ import {
 } from './firebase'
 import appReducer from './AppReducer'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { getDoc } from 'firebase/firestore'
 
 const initState = {
   lists: [],
@@ -31,8 +30,6 @@ const initState = {
   addFoodItem: (foodItem) => {},
   addSavedFood: (foodItemName) => {},
   deleteFoodItem: (foodItem) => {},
-  toggleFoodItemCheckbox: (payload) => {},
-  toggleListPrices: (payload) => {},
   setUserListener: null,
   setListsListener: null,
   unsubscribeListsListener: () => {},
@@ -46,38 +43,17 @@ export const ListsContextProvider = ({ children }) => {
   const currentUrl = useLocation()
   const navigate = useNavigate()
 
-  // GET USER
-  const getUserHandler = async () => {
-    const userId = fbAuth.currentUser.uid
-    const userDoc = await getDoc(doc(fbDB, `users/${userId}`))
-
-    if (userDoc.exists()) {
-      dispatchListsAction({
-        type: 'SET_SAVEDFOODS',
-        payload: userDoc.data().savedFoods,
-      })
-    }
-  }
-
   // USER LISTENER
-
   const setUserListenerHandler = async () => {
     const userId = fbAuth.currentUser.uid
-
-    // let initState = true
 
     const unsubscribeListener = onSnapshot(
       doc(fbDB, `users/${userId}/`),
       (snapshot) => {
-        /*    if (initState) {
-          initState = false
-        } else {*/
         dispatchListsAction({
           type: 'SET_SAVEDFOODS',
           payload: snapshot.data().savedFoods,
         })
-
-        // }
       }
     )
 
@@ -189,8 +165,6 @@ export const ListsContextProvider = ({ children }) => {
       listData.totalPrice = payload.totalPrice
     }
 
-    // console.log(listData)
-
     if (payload.canUpdateDate === false) {
       listData = {
         canUpdateDate: false,
@@ -240,11 +214,6 @@ export const ListsContextProvider = ({ children }) => {
     } catch (e) {
       console.log(e)
     }
-  }
-
-  // TOGGLE LIST PRICES
-  const toggleListPricesHandler = async (payload) => {
-    dispatchListsAction({ type: 'TOGGLE_LIST_PRICES', payload })
   }
 
   // DELETE FOOD ITEM
@@ -315,7 +284,7 @@ export const ListsContextProvider = ({ children }) => {
       }
     })
     dispatchListsAction({
-      type: 'UNSUBSCRIBE_LISTENER',
+      type: 'UNSUBSCRIBE_LIST_LISTENER',
       payload: unsubscribeListener,
     })
   }

@@ -5,7 +5,7 @@ import { ListsContext } from '../../store/ListsContextProvider'
 import FoodItems from '../List/FoodItems'
 import ProgressBar from '../List/ProgressBar'
 import AddFoodItem from '../List/AddFoodItem'
-import Header from '../Auth/Layout/Header'
+import Header from '../Layout/Header'
 
 const List = () => {
   const params = useParams()
@@ -38,9 +38,6 @@ const List = () => {
         buttonText='Delete list'
         buttonFunction={deleteList}
         listPage={true}
-        foodItems={foodItems}
-        currentList={currentList}
-        listsCtx={listsCtx}
       >
         {/*INPUT ADD ITEM*/}
         <AddFoodItem

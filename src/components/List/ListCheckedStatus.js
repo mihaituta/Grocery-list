@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { ShoppingCartIcon } from '@heroicons/react/24/solid'
-import CheckedItemsHelper from '../CheckedItemsHelper'
+import CheckedItemsHelper from '../Helpers/CheckedItemsHelper'
 
 const ListCheckedStatus = ({ foodItems, currentList, listsCtx }) => {
   const {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../Auth/AuthContext'
 import { ListsContext } from '../../store/ListsContextProvider'
 import ShowLists from '../List/ShowLists'
-import Header from '../Auth/Layout/Header'
+import Header from '../Layout/Header'
 
 const Home = () => {
   const { logout } = UserAuth()
