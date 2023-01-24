@@ -19,7 +19,7 @@ const AuthForm = ({
   const [showPass, setShowPass] = useState(false)
 
   return (
-    <div className='max-w-[700px] min-h-screen bg-zinc-800 mx-auto p-4'>
+    <div className='max-w-[400px] min-h-screen bg-zinc-800 mx-auto p-4'>
       {/*APP TITLE*/}
       <h1 className='text-4xl text-white font-bold my-10 text-center'>
         Grocery List
