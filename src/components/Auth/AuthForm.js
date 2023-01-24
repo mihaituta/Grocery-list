@@ -101,7 +101,7 @@ const AuthForm = ({
         {/*SUBMIT BUTTON*/}
         <button
           type='submit'
-          className='border-0 bg-amber-300 hover:bg-amber-200 w-full p-4 my-5 text-white text-xl font-bold'
+          className='border-0 bg-yellow-400/80 hover:bg-yellow-300/80 w-full p-4 my-5 text-white text-xl font-bold'
         >
           {loginForm ? 'Login' : 'Register'}
         </button>
