@@ -41,7 +41,7 @@ const AuthForm = ({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder='Email'
-              className='border-0 focus:ring-amber-300 text-white text-lg bg-zinc-700 p-3 w-full pl-12'
+              className='border-0 focus:ring-amber-300 text-white placeholder-neutral-500 text-lg bg-zinc-700 p-3 w-full pl-12'
               type='email'
             />
             {/*MAIL ICON*/}
@@ -60,7 +60,7 @@ const AuthForm = ({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder='Password'
-              className='border-0 focus:ring-amber-300 bg-zinc-700 p-3 text-white text-lg w-full pl-12'
+              className='border-0 focus:ring-amber-300 bg-zinc-700 placeholder-neutral-500 p-3 text-white text-lg w-full pl-12'
               type={!showPass ? 'password' : 'text'}
             />
             {/*LOCK ICON*/}

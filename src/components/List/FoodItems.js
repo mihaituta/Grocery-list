@@ -36,7 +36,7 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
     listsCtx.updateList({ foodItems, listId: currentList.id })
   }
 
-  const showItems = (foodItem, index) => {
+  const showPrice = (foodItem, index) => {
     return (
       <>
         <form action=''>
@@ -94,8 +94,8 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
                           className='flex items-center bg-zinc-800 px-4 py-3 mx-2 rounded
             cursor-pointer justify-between drop-shadow-md'
                         >
+                          {/*CHECKBOX INPUT*/}
                           <div className='flex items-center'>
-                            {/*CHECKBOX INPUT*/}
                             <input
                               type='checkbox'
                               checked={foodItem.checked}
@@ -118,9 +118,9 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
                           {/*PRICE INPUT*/}
                           <div className='flex items-center'>
                             {currentList.togglePrices
-                              ? showItems(foodItem, index)
+                              ? showPrice(foodItem, index)
                               : foodItem.price > 0 &&
-                                showItems(foodItem, index)}
+                                showPrice(foodItem, index)}
 
                             {/*DELETE ITEMS BTN*/}
                             <TrashIcon
@@ -129,7 +129,7 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
                                 deleteFoodItemHandler(foodItem, e)
                               }
                             />
-                            {/*DRAG ITEM REORDER*/}
+                            {/*DRAG ICON REORDER*/}
                             <div {...provided.dragHandleProps}>
                               <Bars3Icon className='h-7 w-7 ml-4 text-zinc-500 '></Bars3Icon>
                             </div>

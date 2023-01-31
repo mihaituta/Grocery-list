@@ -10,13 +10,10 @@ const SavedFoodsChips = ({
     <>
       {/*CHIPS RECOMMENDATIONS*/}
       {listPage && itemNameRef.current.value && (
-        <div className='flex flex-wrap gap-0 transition duration-300 ease-out'>
+        <div className='flex flex-wrap gap-0 '>
           {filteredFoods &&
             filteredFoods.slice(0, 5).map((foodName) => (
-              <div
-                className='flex flex-wrap mr-3 mb-4  transition duration-300 ease-out'
-                key={foodName}
-              >
+              <div className='flex flex-wrap mr-3 mb-4' key={foodName}>
                 <span
                   className='pl-3 pr-1.5 py-1.5 rounded-md text-zinc-900 bg-amber-300
           font-semibold flex items-center cursor-pointer
