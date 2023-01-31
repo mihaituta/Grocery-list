@@ -1,5 +1,11 @@
 export default function AppReducer(state, action) {
   switch (action.type) {
+    case 'SET_LOADING_LISTS':
+      return {
+        ...state,
+        loadingLists: action.payload,
+      }
+
     case 'SET_SAVEDFOODS':
       return {
         ...state,

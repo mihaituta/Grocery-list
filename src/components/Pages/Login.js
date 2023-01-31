@@ -36,6 +36,7 @@ const Login = () => {
       password={password}
       setPassword={setPassword}
       error={error}
+      setError={setError}
     />
   )
 }

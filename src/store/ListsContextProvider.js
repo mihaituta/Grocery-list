@@ -21,6 +21,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 const initState = {
   lists: [],
+  loadingLists: true,
   currentList: {},
   savedFoods: [],
   setCurrentList: (payload) => {},
@@ -91,7 +92,17 @@ export const ListsContextProvider = ({ children }) => {
 
     const updatedLists = []
     try {
+      dispatchListsAction({
+        type: 'SET_LOADING_LISTS',
+        payload: true,
+      })
+
       const snapshot = await getDocs(listsQueryOrdered)
+
+      dispatchListsAction({
+        type: 'SET_LOADING_LISTS',
+        payload: false,
+      })
 
       snapshot.forEach((doc) => {
         let list = doc.data()
@@ -297,6 +308,7 @@ export const ListsContextProvider = ({ children }) => {
   const listsContext = {
     lists: state.lists,
     currentList: state.currentList,
+    loadingLists: state.loadingLists,
 
     savedFoods: state.savedFoods,
     addSavedFood: addSavedFoodHandler,

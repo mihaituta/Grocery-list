@@ -34,6 +34,7 @@ const Register = () => {
       password={password}
       setPassword={setPassword}
       error={error}
+      setError={setError}
     />
   )
 }

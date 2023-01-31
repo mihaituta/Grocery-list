@@ -6,6 +6,7 @@ import FoodItems from '../List/FoodItems'
 import ProgressBar from '../List/ProgressBar'
 import AddFoodItem from '../List/AddFoodItem'
 import Header from '../Layout/Header'
+import LoadingDataPlaceholder from '../List/LoadingDataPlaceholder'
 
 const List = () => {
   const params = useParams()
@@ -13,6 +14,7 @@ const List = () => {
   const listsCtx = useContext(ListsContext)
   const currentList = listsCtx.currentList
   const foodItems = listsCtx.currentList.foodItems
+  const loadingLists = listsCtx.loadingLists
 
   const deleteList = () => {
     listsCtx.deleteList(currentList.id)
@@ -50,6 +52,15 @@ const List = () => {
         <ProgressBar foodItems={foodItems} />
       </Header>
 
+      {/*PLACEHOLDER FOR LOADING DATA OR NO DATA*/}
+      <LoadingDataPlaceholder
+        loadingLists={loadingLists}
+        data={foodItems}
+        dataLoadingMessage='Loading food items...'
+        noDataMessage='List is empty.'
+      />
+
+      {/*FOOD ITEMS*/}
       <FoodItems
         foodItems={foodItems}
         currentList={currentList}
