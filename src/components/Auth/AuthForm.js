@@ -24,6 +24,7 @@ const AuthForm = ({
   const [isPassEmpty, setIsPassEmpty] = useState(false)
   const emailInputRef = useRef()
   const passInputRef = useRef()
+
   const validateInputs = (e) => {
     e.preventDefault()
     if (!email.trim()) setIsEmailEmpty(true)
@@ -32,6 +33,7 @@ const AuthForm = ({
     if (!password.trim()) setIsPassEmpty(true)
     emailInputRef.current.blur()
     passInputRef.current.blur()
+
     //if neither email nor password are empty and email is valid proceed to submit
     if (email.trim() && password.trim() && email.includes('@')) handleSubmit(e)
   }
@@ -94,7 +96,7 @@ const AuthForm = ({
                 e.target.value.trim()
                   ? setIsEmailEmpty(false)
                   : setIsEmailEmpty(true)
-                // email has to be a correct email
+                // email has to be a correct email format
                 const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
                 regex.test(e.target.value.trim())
                   ? setIsEmailValid(true)

@@ -63,7 +63,6 @@ const AddFoodItem = ({ listsCtx, listPage, foodItems, currentList }) => {
               value={itemName}
               onChange={itemNameChangeHandler}
               onKeyDown={(e) => e.key === 'Enter' && addFoodItemHandler(e)}
-              // placeholder='Enter item here...'
               placeholder='Add new item...'
               className='bg-neutral-900 text-white text-lg placeholder-neutral-600
              border-0 focus:ring-0 ring-0 rounded w-40'

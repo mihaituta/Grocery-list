@@ -49,8 +49,8 @@ const TotalPrice = () => {
               value={currentList.totalPrice}
               onChange={(e) => {
                 // only allow empty or number with 6 digits and 1 or 2 decimals
-                const re = /^(\s*|[1-9]\d{0,5})(\.\d{0,2})?$/
-                if (re.test(e.target.value)) {
+                const regex = /^(\s*|[1-9]\d{0,5})(\.\d{0,2})?$/
+                if (regex.test(e.target.value)) {
                   currentList.totalPrice = e.target.value
                   setTotalPriceState(currentList.totalPrice)
                 }

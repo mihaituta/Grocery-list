@@ -72,7 +72,7 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
         <Droppable droppableId='dropList'>
           {(provided) => (
             <ul
-              className='dropList mt-2'
+              className='mt-2'
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -84,15 +84,17 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
                     draggableId={foodItem.id}
                     index={index}
                   >
-                    {(provided) => (
+                    {(provided, snapshot) => (
                       <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         className='mt-2'
                       >
                         <label
-                          className='flex items-center bg-zinc-800 px-4 py-3 mx-2 rounded
-            cursor-pointer justify-between drop-shadow-md'
+                          className={`flex items-center px-4 py-3 mx-2 rounded 
+            cursor-pointer justify-between drop-shadow-md transition-colors duration-500 ${
+              snapshot.isDragging ? 'bg-amber-300' : 'bg-zinc-800'
+            }`}
                         >
                           {/*CHECKBOX INPUT*/}
                           <div className='flex items-center'>
@@ -102,13 +104,21 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
                               onChange={() => foodItemCheckHandler(index)}
                               id={`checkbox-${index}`}
                               name={foodItem.name}
-                              className='w-6 h-6 text-amber-300 bg-zinc-800 focus:ring-offset-0
-                              border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
+                              className={`w-6 h-6 ${
+                                snapshot.isDragging
+                                  ? 'text-zinc-800 bg-amber-300 border-zinc-800'
+                                  : 'text-amber-300 bg-zinc-800 border-amber-300'
+                              }   focus:ring-offset-0
+                              border-2  focus:ring-0 ring-0 rounded-full cursor-pointer`}
                             />
 
                             {/*ITEM NAME*/}
                             <label
-                              className='ml-3 mr-3 text-xl text-white flex break-words items-center cursor-pointer'
+                              className={`ml-3 mr-3 text-xl ${
+                                snapshot.isDragging
+                                  ? 'text-zinc-800'
+                                  : 'text-white'
+                              } flex break-words items-center cursor-pointer`}
                               htmlFor={`checkbox-${index}`}
                             >
                               {foodItem.name}
@@ -124,7 +134,11 @@ const FoodItems = ({ currentList, foodItems, listsCtx }) => {
 
                             {/*DELETE ITEMS BTN*/}
                             <TrashIcon
-                              className='h-6 w-6 text-amber-300'
+                              className={`h-6 w-6 ${
+                                snapshot.isDragging
+                                  ? 'text-zinc-800'
+                                  : ' text-amber-300'
+                              }`}
                               onClick={(e) =>
                                 deleteFoodItemHandler(foodItem, e)
                               }

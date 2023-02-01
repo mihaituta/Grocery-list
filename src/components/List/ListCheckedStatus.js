@@ -40,18 +40,18 @@ const ListCheckedStatus = ({ foodItems, currentList, listsCtx }) => {
     <div>
       {foodItems && foodItems.length > 0 && (
         <div
-          className={`ml-4 flex items-center rounded pl-1 pr-1.5 py-1 ${
+          className={`ml-4 flex items-center rounded pl-1.5 pr-2 py-1 ${
             isListCompleted ? 'text-white bg-green-500/80' : 'text-amber-300'
           }`}
         >
           {isListCompleted ? (
-            <CheckCircleIcon className='w-6 h-6 mr-0.5' />
+            <CheckCircleIcon className='w-6 h-6 mb-0.5 mr-1' />
           ) : (
-            <ShoppingCartIcon className='w-6 h-6 mb-0.5 mr-1' />
+            <ShoppingCartIcon className='w-6 h-6 mb-1 mr-1.5' />
           )}
-          <p className='text-2xl'>
+          <div className='text-xl font-semibold'>
             {nrOfCheckedItems}/{foodItems.length}
-          </p>
+          </div>
         </div>
       )}
     </div>

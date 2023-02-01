@@ -16,8 +16,8 @@ const SavedFoodsChips = ({
               <div className='flex flex-wrap mr-3 mb-4' key={foodName}>
                 <span
                   className='pl-3 pr-1.5 py-1.5 rounded-md text-zinc-900 bg-amber-300
-          font-semibold flex items-center cursor-pointer
-           active:bg-amber-200 transition duration-300 ease-out'
+          font-semibold flex items-center cursor-pointer active:bg-amber-200 transition
+          duration-300 ease-out'
                   onClick={(e) => addFoodItemHandler(e, foodName)}
                 >
                   {foodName}

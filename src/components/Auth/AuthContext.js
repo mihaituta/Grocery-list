@@ -31,9 +31,8 @@ export const AuthContextProvider = ({ children }) => {
     )
   }
 
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(fbAuth, email, password)
-  }
+  const login = (email, password) =>
+    signInWithEmailAndPassword(fbAuth, email, password)
 
   const logout = async () => {
     listsCtx.unsubscribeListsListener()
