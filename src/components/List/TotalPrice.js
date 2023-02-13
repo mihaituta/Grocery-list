@@ -34,15 +34,23 @@ const TotalPrice = () => {
     })
   }
 
+  const allItemsPrice = () => {
+    return foodItems.reduce(
+      (total, foodItem) => total + Number(foodItem.price),
+      0
+    )
+  }
+
   return (
     <>
-      {/*TOTAL PRICE */}
       {foodItems && foodItems.length > 0 && (
-        <div className='flex items-center justify-between my-4'>
-          <div className='text-white text-xl'>
-            Total:
-            {/*prettier-ignore*/}
-            <input
+        <div className='my-4'>
+          <div className='flex items-center justify-between '>
+            {/*TOTAL PRICE */}
+            <div className='text-white text-xl'>
+              Total:
+              {/*prettier-ignore*/}
+              <input
               style={{width: `${Math.min(Math.max(currentList.totalPrice.length, 2), 10) + 2}ch`,}}
               ref={totalPriceRef}
               readOnly={CheckedItemsHelper(foodItems).listCompletedWithAllItemsChecked}
@@ -62,23 +70,34 @@ const TotalPrice = () => {
               className='disabled:cursor-not-allowed appearance-none text-center bg-neutral-900 text-zinc-300 text-lg placeholder-neutral-600
              border-0 focus:ring-0 ring-0 rounded h-8 mx-2 p-0'
             />
-            lei
-          </div>
+              lei
+            </div>
 
-          {/*TOGGLE PRICES*/}
-          <div className='flex items-center'>
-            <input
-              type='checkbox'
-              checked={currentList.togglePrices}
-              onChange={togglePrices}
-              id='pricesInput'
-              className='w-5 h-5 text-amber-300 bg-zinc-800 focus:ring-offset-0
+            {/*TOGGLE PRICES*/}
+            <div className='flex items-center'>
+              <input
+                type='checkbox'
+                checked={currentList.togglePrices}
+                onChange={togglePrices}
+                id='pricesInput'
+                className='w-5 h-5 text-amber-300 bg-zinc-800 focus:ring-offset-0
                 border-2 border-amber-300 focus:ring-0 ring-0 rounded-full cursor-pointer'
-            />
-            <label className='text-white ml-2 text-lg' htmlFor='pricesInput'>
-              Prices
-            </label>
+              />
+              <label className='text-white ml-2 text-lg' htmlFor='pricesInput'>
+                Prices
+              </label>
+            </div>
           </div>
+          {/*CURRENT PRICE*/}
+          {!CheckedItemsHelper(foodItems).listCompletedWithAllItemsChecked && (
+            <div className='text-neutral-500 font-semibold mt-3'>
+              Current price:
+              <span className='mx-1.5 py-1 px-1.5 bg-neutral-900 text-neutral-400 rounded'>
+                {allItemsPrice()}
+              </span>
+              lei
+            </div>
+          )}
         </div>
       )}
     </>
