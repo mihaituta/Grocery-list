@@ -34,12 +34,8 @@ const TotalPrice = () => {
     })
   }
 
-  const allItemsPrice = () => {
-    return foodItems.reduce(
-      (total, foodItem) => total + Number(foodItem.price),
-      0
-    )
-  }
+  //prettier-ignore
+  const allItemsPrice = () => String(foodItems.reduce((total, foodItem) => total + Number(foodItem.price), 0).toFixed(2))
 
   return (
     <>
