@@ -1,6 +1,10 @@
 //prettier-ignore
 const CheckedItemsHelper = (foodItems) => {
+  //nr of checked items
   const nrOfCheckedItems = foodItems && foodItems.reduce((nrOfChecks, foodItem) => nrOfChecks + (foodItem.checked === true), 0)
+
+  //checked items
+  const checkedItems = foodItems && foodItems.filter((checkedItem) => checkedItem.checked)
 
   //all items are checked so the list is completed
   const isListCompleted = foodItems && foodItems.length > 0 && nrOfCheckedItems === foodItems.length
@@ -13,6 +17,7 @@ const CheckedItemsHelper = (foodItems) => {
     isListCompleted && foodItems.length === nrOfItemsWithPrices
 
   return {
+    checkedItems,
     nrOfCheckedItems,
     isListCompleted,
     listCompletedWithAllItemsChecked,

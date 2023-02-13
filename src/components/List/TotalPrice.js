@@ -35,7 +35,7 @@ const TotalPrice = () => {
   }
 
   //prettier-ignore
-  const allItemsPrice = () => String(foodItems.reduce((total, foodItem) => total + Number(foodItem.price), 0).toFixed(2))
+  const checkedItemsPrice = () => Number(String(CheckedItemsHelper(foodItems).checkedItems.reduce((total, foodItem) => total + Number(foodItem.price), 0).toFixed(2)))
 
   return (
     <>
@@ -85,15 +85,18 @@ const TotalPrice = () => {
             </div>
           </div>
           {/*CURRENT PRICE*/}
-          {!CheckedItemsHelper(foodItems).listCompletedWithAllItemsChecked && (
-            <div className='text-neutral-500 font-semibold mt-3'>
-              Current price:
-              <span className='mx-1.5 py-1 px-1.5 bg-neutral-900 text-neutral-400 rounded'>
-                {allItemsPrice()}
-              </span>
-              lei
-            </div>
-          )}
+          {/*ONLY SHOW IF ALL ITEMS ARE NOT CHECKED && IF THERE ARE ANY CHECKED ITEMS && IF CURRENT IS NOT 0*/}
+          {!CheckedItemsHelper(foodItems).listCompletedWithAllItemsChecked &&
+            CheckedItemsHelper(foodItems).checkedItems.length > 0 &&
+            checkedItemsPrice() > 0 && (
+              <div className='text-neutral-500 font-semibold mt-3'>
+                Current price:
+                <span className='mx-1.5 py-1 px-1.5 bg-neutral-900 text-neutral-400 rounded'>
+                  {checkedItemsPrice()}
+                </span>
+                lei
+              </div>
+            )}
         </div>
       )}
     </>
